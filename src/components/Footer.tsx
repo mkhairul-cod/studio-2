@@ -33,6 +33,7 @@ export default function Footer() {
             <ul className="space-y-2">
               <li><Link href="/layanan" className="text-sm text-muted-foreground hover:text-primary transition-colors">Layanan</Link></li>
               <li><Link href="/tentang-kami" className="text-sm text-muted-foreground hover:text-primary transition-colors">Tentang Kami</Link></li>
+              <li><Link href="/kontak" className="text-sm text-muted-foreground hover:text-primary transition-colors">Kontak</Link></li>
               <li><Link href="/order" className="text-sm text-muted-foreground hover:text-primary transition-colors">Order</Link></li>
               <li><Link href="/#testimonials" className="text-sm text-muted-foreground hover:text-primary transition-colors">Testimoni</Link></li>
             </ul>
