@@ -136,9 +136,9 @@ export default function Home() {
         {/* Hero Section */}
         <section
           id="hero"
-          className="bg-primary/5 text-center pt-20 md:pt-32 pb-12 md:pb-16"
+          className="bg-primary/5 text-center"
         >
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto px-4 pt-20 md:pt-32 pb-16 md:pb-24">
             <h1 className="text-4xl md:text-6xl font-headline font-bold text-primary mb-4">
               Wujudkan Publikasi Ilmiah Anda
             </h1>
@@ -161,7 +161,7 @@ export default function Home() {
         </section>
 
         {/* Scrolling Ticker Section */}
-        <section className="bg-primary text-primary-foreground py-3 overflow-hidden">
+        <section className="bg-primary text-primary-foreground py-3 overflow-hidden -mt-12 md:-mt-16 relative z-10">
             <div className="relative">
                 <div className="flex whitespace-nowrap animate-scroll">
                     <div className="flex-shrink-0 px-8 font-semibold"><TickerText /></div>
