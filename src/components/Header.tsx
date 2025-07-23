@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { Menu, University, Sparkles } from 'lucide-react';
+import { Menu, University, Wand2 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -13,6 +13,7 @@ const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/layanan', label: 'Layanan' },
   { href: '/artikel', label: 'Artikel', isNew: true },
+  { href: '/alat-ai', label: 'Alat AI', isNew: true },
   { href: '/tentang-kami', label: 'Tentang Kami' },
   { href: '/mitra', label: 'Mitra' },
   { href: '/kontak', label: 'Kontak' },
@@ -40,6 +41,7 @@ export default function Header() {
                 pathname === link.href ? 'text-primary' : 'text-muted-foreground'
               )}
             >
+              {link.href === '/alat-ai' && <Wand2 className="w-4 h-4" />}
               {link.label}
               {link.isNew && (
                 <span className="bg-accent/80 text-accent-foreground text-xs font-bold px-2 py-0.5 rounded-full">
@@ -80,6 +82,7 @@ export default function Header() {
                         pathname === link.href ? 'text-primary' : 'text-muted-foreground'
                       )}
                     >
+                       {link.href === '/alat-ai' && <Wand2 className="w-5 h-5" />}
                       {link.label}
                        {link.isNew && (
                         <span className="bg-accent/80 text-accent-foreground text-xs font-bold px-2 py-0.5 rounded-full">
