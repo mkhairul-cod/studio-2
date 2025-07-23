@@ -10,6 +10,8 @@ import {
   Star,
   ArrowRight,
   MessageCircle,
+  Users,
+  Briefcase,
 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -138,28 +140,87 @@ export default function Home() {
         {/* Hero Section */}
         <section
           id="hero"
-          className="bg-primary/5 text-center"
+          className="relative bg-primary/5 w-full"
         >
-          <div className="container mx-auto px-4 pt-20 md:pt-32 pb-16 md:pb-24">
-            <h1 className="text-4xl md:text-6xl font-headline font-bold text-primary mb-4">
-              Wujudkan Publikasi Ilmiah Anda
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-              Simpul Academy menyediakan layanan akademik profesional untuk membantu
-              peneliti, dosen, dan mahasiswa dalam mencapai target publikasi.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
-                <Link href="/order">Mulai Proyek Anda</Link>
-              </Button>
-               <Button asChild size="lg" variant="outline" className="border-primary/30">
-                <Link href="/kontak">
-                  <MessageCircle className="mr-2 h-5 w-5"/>
-                  Konsultasi Gratis
-                </Link>
-              </Button>
-            </div>
-          </div>
+          <Carousel
+            opts={{ loop: true }}
+            className="w-full"
+          >
+            <CarouselContent>
+              <CarouselItem>
+                <div className="container mx-auto px-4 h-[70vh] md:h-[60vh] flex flex-col justify-center text-center">
+                  <h1 className="text-4xl md:text-6xl font-headline font-bold text-primary mb-4">
+                    Wujudkan Publikasi Ilmiah Anda
+                  </h1>
+                  <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
+                    Simpul Academy menyediakan layanan akademik profesional untuk membantu
+                    peneliti, dosen, dan mahasiswa dalam mencapai target publikasi.
+                  </p>
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
+                      <Link href="/order">Mulai Proyek Anda</Link>
+                    </Button>
+                     <Button asChild size="lg" variant="outline" className="border-primary/30">
+                      <Link href="/kontak">
+                        <MessageCircle className="mr-2 h-5 w-5"/>
+                        Konsultasi Gratis
+                      </Link>
+                    </Button>
+                  </div>
+                </div>
+              </CarouselItem>
+              <CarouselItem>
+                <div className="container mx-auto px-4 h-[70vh] md:h-[60vh] flex flex-col justify-center text-center">
+                  <h1 className="text-4xl md:text-6xl font-headline font-bold text-primary mb-4">
+                    Bangun Peluang & Jadi Mitra Kami
+                  </h1>
+                  <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
+                    Buka peluang penghasilan tambahan dan perluas jaringan Anda dengan menjadi mitra Simpul Academy. Mari tumbuh dan berkolaborasi bersama kami.
+                  </p>
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
+                      <Link href="/mitra#join-mitra">
+                        <Users className="mr-2 h-5 w-5" />
+                        Jadi Mitra Kami
+                      </Link>
+                    </Button>
+                     <Button asChild size="lg" variant="outline" className="border-primary/30">
+                        <Link href="/layanan">
+                            <Briefcase className="mr-2 h-5 w-5" />
+                            Lihat Layanan
+                        </Link>
+                    </Button>
+                  </div>
+                </div>
+              </CarouselItem>
+              <CarouselItem>
+                 <div className="container mx-auto px-4 h-[70vh] md:h-[60vh] flex flex-col justify-center text-center">
+                  <h1 className="text-4xl md:text-6xl font-headline font-bold text-primary mb-4">
+                    Asah Kemampuan, Cari Solusi
+                  </h1>
+                  <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
+                    Ayo tingkatkan skill menulis, meneliti, menganalisis masalah, dan berbagi ide untuk mencari solusi bersama melalui program pelatihan kami.
+                  </p>
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
+                       <Link href="/layanan">
+                        <Presentation className="mr-2 h-5 w-5"/>
+                        Lihat Pelatihan
+                      </Link>
+                    </Button>
+                     <Button asChild size="lg" variant="outline" className="border-primary/30">
+                       <Link href="/kontak">
+                        <MessageCircle className="mr-2 h-5 w-5"/>
+                        Hubungi Kami
+                      </Link>
+                    </Button>
+                  </div>
+                </div>
+              </CarouselItem>
+            </CarouselContent>
+            <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 hidden md:flex" />
+            <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 hidden md:flex" />
+          </Carousel>
         </section>
 
         {/* Scrolling Ticker Section */}
@@ -290,3 +351,5 @@ export default function Home() {
     </div>
   );
 }
+
+    
