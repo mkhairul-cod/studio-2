@@ -14,7 +14,7 @@ import {
   Briefcase,
   Award,
 } from 'lucide-react';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Autoplay from "embla-carousel-autoplay"
 
 
@@ -34,6 +34,14 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 
 const services = [
   {
@@ -167,15 +175,58 @@ const slides = [
     }
 ];
 
+const SpecialOfferDialog = ({ open, onOpenChange }: { open: boolean, onOpenChange: (open: boolean) => void }) => {
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <div className="flex justify-center items-center mb-4">
+            <Award className="w-16 h-16 text-accent-foreground" />
+          </div>
+          <DialogTitle className="text-2xl font-headline text-primary text-center">
+            Program Spesial: Coaching LPDP Gratis!
+          </DialogTitle>
+          <DialogDescription className="text-center text-muted-foreground pt-2">
+            Raih mimpimu studi lanjut dengan beasiswa LPDP. Kami membuka kelas bimbingan intensif gratis dari esai hingga wawancara. Kelas dibuka jika terkumpul minimal 2 peserta.
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter className="sm:justify-center pt-4">
+          <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg" onClick={() => onOpenChange(false)}>
+            <Link href="/order">
+              Amankan Tempat Anda
+              <ArrowRight className="ml-2 h-5 w-5"/>
+            </Link>
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+
 export default function Home() {
 
   const plugin = React.useRef(
     Autoplay({ delay: 5000, stopOnInteraction: true })
   )
+  const [isSpecialOfferOpen, setSpecialOfferOpen] = useState(false);
+
+  useEffect(() => {
+    const hasSeenOffer = sessionStorage.getItem('hasSeenLpdpOffer');
+    if (!hasSeenOffer) {
+      const timer = setTimeout(() => {
+        setSpecialOfferOpen(true);
+        sessionStorage.setItem('hasSeenLpdpOffer', 'true');
+      }, 3000); 
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
 
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex-grow">
+        <SpecialOfferDialog open={isSpecialOfferOpen} onOpenChange={setSpecialOfferOpen} />
         {/* Hero Section */}
         <section
           id="hero"
@@ -351,33 +402,6 @@ export default function Home() {
               <CarouselNext className="hidden md:flex" />
             </Carousel>
           </div>
-        </section>
-
-        {/* Special Program Section */}
-        <section id="special-program" className="py-16 md:py-24 bg-primary/5">
-            <div className="container mx-auto px-4">
-                <div className="bg-card rounded-lg shadow-xl p-8 md:p-12 border border-primary/20 flex flex-col md:flex-row items-center gap-8">
-                    <div className="p-4 bg-accent/20 rounded-full">
-                        <Award className="w-16 h-16 text-accent-foreground" />
-                    </div>
-                    <div className="text-center md:text-left flex-grow">
-                        <h2 className="text-2xl md:text-3xl font-headline font-bold text-primary">
-                            Program Spesial: Coaching Beasiswa LPDP (Gratis!)
-                        </h2>
-                        <p className="text-muted-foreground mt-2 max-w-2xl">
-                            Raih mimpimu studi lanjut dengan beasiswa LPDP. Kami membuka kelas bimbingan intensif gratis untuk persiapan dari esai hingga wawancara. Kelas dibuka jika terkumpul minimal 2 peserta.
-                        </p>
-                    </div>
-                    <div className="flex-shrink-0">
-                         <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg">
-                            <Link href="/order">
-                                Amankan Tempat Anda
-                                <ArrowRight className="ml-2 h-5 w-5"/>
-                            </Link>
-                        </Button>
-                    </div>
-                </div>
-            </div>
         </section>
 
       </main>
