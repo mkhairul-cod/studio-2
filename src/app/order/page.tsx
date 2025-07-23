@@ -41,6 +41,11 @@ const formSchema = z.object({
     'proofreading',
     'pendampingan_publikasi',
     'pelatihan',
+    'pembuatan_web',
+    'aplikasi_web',
+    'modul_digital',
+    'analisis_data',
+    'lainnya'
   ], { required_error: 'Silakan pilih salah satu layanan.'}),
   file: z.any().optional(),
 });
@@ -58,6 +63,11 @@ const serviceOptions = [
     { value: 'proofreading', label: 'Academic Proofreading' },
     { value: 'pendampingan_publikasi', label: 'Pendampingan Publikasi Jurnal' },
     { value: 'pelatihan', label: 'Pelatihan Penulisan Akademik' },
+    { value: 'pembuatan_web', label: 'Pembuatan Web Pribadi' },
+    { value: 'aplikasi_web', label: 'Aplikasi Web-Based' },
+    { value: 'modul_digital', label: 'Modul Digital Interaktif' },
+    { value: 'analisis_data', label: 'Analisis & Olah Data' },
+    { value: 'lainnya', label: 'Layanan Lainnya (Jelaskan di WA)' },
 ];
 
 export default function OrderPage() {
@@ -79,16 +89,51 @@ export default function OrderPage() {
 
   const processForm = async (data: FormData) => {
     setIsSubmitting(true);
-    console.log('Form Data:', data);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    toast({
-      title: "Pesanan Terkirim!",
-      description: "Tim kami akan segera menghubungi Anda melalui WhatsApp.",
-      variant: "default",
-    });
+     try {
+      // Create a FormData object to handle file uploads
+      const formData = new FormData();
+      
+      // Append all text fields from 'data'
+      Object.keys(data).forEach(key => {
+        if (key !== 'file') {
+          formData.append(key, (data as any)[key]);
+        }
+      });
+      
+      // Append the file if it exists
+      if (data.file && data.file.length > 0) {
+        formData.append('file', data.file[0]);
+      }
+      formData.append('_subject', `Pesanan Baru Layanan: ${data.serviceType} dari ${data.name}`);
+
+
+      const response = await fetch('https://formspree.io/f/xanjbwpd', {
+          method: 'POST',
+          body: formData,
+          headers: {
+              'Accept': 'application/json'
+          }
+      });
+
+      if (response.ok) {
+        setIsSubmitted(true);
+         toast({
+          title: "Pesanan Terkirim!",
+          description: "Tim kami akan segera menghubungi Anda melalui WhatsApp.",
+          variant: "default",
+        });
+      } else {
+        throw new Error('Gagal mengirim pesanan.');
+      }
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Terjadi kesalahan saat mengirim pesanan. Silakan coba lagi.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   type FieldName = keyof FormData;
@@ -114,7 +159,7 @@ export default function OrderPage() {
 
   if (isSubmitted) {
     return (
-        <div className="container mx-auto px-4 py-16 md:py-24 flex items-center justify-center">
+        <div className="container mx-auto px-4 py-16 md:py-24 flex items-center justify-center min-h-[60vh]">
             <Card className="w-full max-w-lg text-center">
                 <CardHeader>
                     <div className="mx-auto bg-green-100 p-4 rounded-full w-fit">
@@ -123,8 +168,8 @@ export default function OrderPage() {
                     <CardTitle className="font-headline text-3xl text-primary mt-4">Pesanan Berhasil Dikirim!</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <p className="text-muted-foreground">Terima kasih telah melakukan pemesanan. Tim kami akan segera menghubungi Anda melalui WhatsApp untuk konfirmasi dan langkah selanjutnya.</p>
-                    <p className="text-muted-foreground mt-2">Mohon periksa juga folder spam email Anda untuk detail pesanan.</p>
+                    <p className="text-muted-foreground">Terima kasih telah melakukan pemesanan. Tim kami akan segera menghubungi Anda melalui WhatsApp untuk konfirmasi dan diskusi lebih lanjut mengenai detail dan harga.</p>
+                    <p className="text-muted-foreground mt-2">Mohon periksa juga folder spam email Anda untuk salinan pesanan.</p>
                 </CardContent>
             </Card>
         </div>
@@ -136,10 +181,10 @@ export default function OrderPage() {
       <div className="container mx-auto px-4 py-16 md:py-24">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-headline font-bold text-primary">
-            Formulir Pemesanan
+            Formulir Pemesanan Layanan
           </h1>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto mt-4">
-            Lengkapi formulir di bawah ini untuk memulai proyek Anda bersama kami.
+            Lengkapi 3 langkah mudah di bawah ini untuk memulai proyek Anda bersama kami. Tim kami akan menghubungi Anda untuk konsultasi harga dan detail.
           </p>
         </div>
 
@@ -177,7 +222,7 @@ export default function OrderPage() {
                         )} />
                         <FormField control={methods.control} name="whatsapp" render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Nomor WhatsApp</FormLabel>
+                            <FormLabel>Nomor WhatsApp Aktif</FormLabel>
                             <FormControl><Input placeholder="Contoh: 081234567890" {...field} /></FormControl>
                             <FormMessage />
                           </FormItem>
@@ -200,7 +245,7 @@ export default function OrderPage() {
                             <FormControl>
                               <SelectTrigger>
                                 <SelectValue placeholder="Pilih layanan yang Anda butuhkan" />
-                              </SelectTrigger>
+                              </Trigger>
                             </FormControl>
                             <SelectContent>
                               {serviceOptions.map(option => (
@@ -218,16 +263,22 @@ export default function OrderPage() {
                     {currentStep === 2 && (
                       <div className="space-y-4 text-center">
                         <p className="text-muted-foreground">
-                            Silakan unggah naskah atau dokumen relevan lainnya (opsional).
+                            Jika ada, silakan unggah naskah atau dokumen relevan lainnya (opsional, maks 10MB).
                         </p>
                         <FormField control={methods.control} name="file" render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Unggah File (Max. 10MB)</FormLabel>
-                            <FormControl><Input type="file" {...methods.register('file')} /></FormControl>
+                            <FormLabel className="sr-only">Unggah File</FormLabel>
+                            <FormControl>
+                                <Input 
+                                    type="file" 
+                                    {...methods.register('file')}
+                                    className="file:bg-primary/10 file:text-primary file:font-semibold file:px-4 file:py-2 file:border-none file:rounded-md hover:file:bg-primary/20"
+                                />
+                            </FormControl>
                             <FormMessage />
                           </FormItem>
                         )} />
-                        <p className="text-sm text-muted-foreground pt-4">Dengan menekan tombol "Kirim Pesanan", Anda menyetujui syarat dan ketentuan kami.</p>
+                        <p className="text-sm text-muted-foreground pt-4">Dengan menekan tombol "Kirim Pesanan", Anda mengajukan permintaan penawaran dan setuju untuk dihubungi oleh tim kami.</p>
                       </div>
                     )}
                   </motion.div>

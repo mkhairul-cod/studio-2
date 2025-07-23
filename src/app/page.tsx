@@ -66,13 +66,13 @@ const team = [
     dataAiHint: 'smiling man',
   },
   {
-    name: 'Siti Aminah',
+    name: 'Siti Aminah, S.Hum',
     role: 'Lead Editor',
     image: 'https://placehold.co/150x150.png',
     dataAiHint: 'professional woman',
   },
   {
-    name: 'Budi Hartono',
+    name: 'Budi Hartono, M.Kom',
     role: 'Training Coordinator',
     image: 'https://placehold.co/150x150.png',
     dataAiHint: 'man glasses',
@@ -215,8 +215,8 @@ export default function Home() {
                 Tim Ahli Kami
               </h2>
               <p className="text-md text-muted-foreground max-w-2xl mx-auto mt-2">
-                Dipandu oleh para profesional muda yang bersemangat dalam dunia
-                akademik dan inovasi digital.
+                Dipandu oleh para profesional yang bersemangat dalam dunia
+                akademik dan inovasi digital untuk membantu kesuksesan Anda.
               </p>
             </div>
             <div className="flex flex-wrap justify-center gap-8">
