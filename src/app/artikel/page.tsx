@@ -2,35 +2,38 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, Calendar, Tag } from 'lucide-react';
+import { ArrowRight, Calendar, Tag, Sparkles } from 'lucide-react';
 
 const placeholderArticles = [
   {
-    title: '5 Kesalahan Umum dalam Menulis Abstrak dan Cara Menghindarinya',
-    category: 'Tips Menulis',
+    title: 'AI dalam Penelitian: Kawan atau Lawan? Etika & Pemanfaatan',
+    category: 'Teknologi AI',
+    date: '18 Juli 2024',
+    summary: 'Kecerdasan Buatan (AI) mengubah lanskap akademik. Pahami bagaimana cara memanfaatkan AI secara etis dan efektif untuk penelitian Anda tanpa terjebak plagiarisme.',
+    image: 'https://placehold.co/800x400.png',
+    dataAiHint: 'artificial intelligence robot',
+    link: '#',
+    isNew: true,
+  },
+  {
+    title: 'Update 2024: Daftar Jurnal Predator yang Wajib Anda Hindari',
+    category: 'Publikasi Ilmiah',
     date: '15 Juli 2024',
-    summary: 'Abstrak adalah gerbang utama penelitian Anda. Pelajari kesalahan yang sering terjadi dan pastikan abstrak Anda efektif dan menarik perhatian editor.',
+    summary: 'Jangan sampai penelitian berharga Anda sia-sia. Kenali ciri-ciri dan daftar terbaru jurnal predator untuk memastikan publikasi Anda aman dan bereputasi.',
     image: 'https://placehold.co/800x400.png',
-    dataAiHint: 'writing desk',
+    dataAiHint: 'warning sign book',
     link: '#',
+    isNew: false,
   },
   {
-    title: 'Update Terbaru: Predatory Journals yang Harus Dihindari di Tahun 2024',
-    category: 'Berita Akademik',
+    title: '5 Kesalahan Fatal dalam Abstrak yang Membuat Naskah Ditolak',
+    category: 'Tips Menulis',
     date: '12 Juli 2024',
-    summary: 'Dunia publikasi terus berubah. Kenali daftar jurnal predator terbaru agar jerih payah penelitian Anda tidak sia-sia dan terpublikasi di tempat yang tepat.',
+    summary: 'Abstrak adalah gerbang utama naskah Anda. Pelajari kesalahan umum yang sering diabaikan dan cara menulis abstrak yang kuat untuk memikat editor jurnal.',
     image: 'https://placehold.co/800x400.png',
-    dataAiHint: 'warning sign',
+    dataAiHint: 'writing desk paper',
     link: '#',
-  },
-  {
-    title: 'Cara Memilih Jurnal yang Tepat untuk Naskah Anda',
-    category: 'Publikasi',
-    date: '10 Juli 2024',
-    summary: 'Memilih jurnal yang sesuai adalah langkah krusial. Kami berikan panduan langkah demi langkah untuk menemukan rumah terbaik bagi artikel ilmiah Anda.',
-    image: 'https://placehold.co/800x400.png',
-    dataAiHint: 'library books',
-    link: '#',
+    isNew: false,
   },
 ];
 
@@ -40,25 +43,32 @@ export default function ArtikelPage() {
       <div className="container mx-auto px-4 py-16 md:py-24">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-headline font-bold text-primary">
-            Artikel & Wawasan Terbaru
+            Wawasan & Tren Akademik Terbaru
           </h1>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto mt-4">
-            Temukan tips, berita, dan analisis mendalam seputar dunia akademik dan publikasi ilmiah dari para ahli di Simpul Academy.
+            Jelajahi analisis mendalam, tips praktis, dan berita terkini seputar dunia publikasi, penelitian, dan teknologi pendidikan dari para ahli di Simpul Academy.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {placeholderArticles.map((article, index) => (
-            <Card key={index} className="flex flex-col overflow-hidden hover:shadow-xl transition-shadow duration-300">
+            <Card key={index} className="flex flex-col overflow-hidden hover:shadow-xl transition-shadow duration-300 group">
               <Link href={article.link} className="block">
-                <div className="relative h-48 w-full">
+                <div className="relative h-48 w-full overflow-hidden">
                   <Image
                     src={article.image}
                     alt={article.title}
                     layout="fill"
                     objectFit="cover"
                     data-ai-hint={article.dataAiHint}
+                    className="transition-transform duration-300 group-hover:scale-105"
                   />
+                   {article.isNew && (
+                    <div className="absolute top-3 right-3 bg-accent text-accent-foreground text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
+                      <Sparkles className="w-3.5 h-3.5" />
+                      <span>BARU</span>
+                    </div>
+                  )}
                 </div>
               </Link>
               <CardHeader>
@@ -82,9 +92,9 @@ export default function ArtikelPage() {
                 <p className="text-sm text-muted-foreground">{article.summary}</p>
               </CardContent>
               <CardFooter>
-                 <Button asChild variant="link" className="p-0 h-auto">
+                 <Button asChild variant="link" className="p-0 h-auto font-semibold">
                     <Link href={article.link}>
-                        Baca Selengkapnya <ArrowRight className="ml-2 h-4 w-4" />
+                        Baca Selengkapnya <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                     </Link>
                  </Button>
               </CardFooter>

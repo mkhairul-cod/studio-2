@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { Menu, University } from 'lucide-react';
+import { Menu, University, Sparkles } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -12,7 +12,7 @@ import { cn } from '@/lib/utils';
 const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/layanan', label: 'Layanan' },
-  { href: '/artikel', label: 'Artikel' },
+  { href: '/artikel', label: 'Artikel', isNew: true },
   { href: '/tentang-kami', label: 'Tentang Kami' },
   { href: '/mitra', label: 'Mitra' },
   { href: '/kontak', label: 'Kontak' },
@@ -36,11 +36,16 @@ export default function Header() {
               key={link.href}
               href={link.href}
               className={cn(
-                'text-sm font-medium transition-colors hover:text-primary',
+                'text-sm font-medium transition-colors hover:text-primary flex items-center gap-1.5',
                 pathname === link.href ? 'text-primary' : 'text-muted-foreground'
               )}
             >
               {link.label}
+              {link.isNew && (
+                <span className="bg-accent/80 text-accent-foreground text-xs font-bold px-2 py-0.5 rounded-full">
+                  NEW
+                </span>
+              )}
             </Link>
           ))}
         </nav>
@@ -71,11 +76,16 @@ export default function Header() {
                       href={link.href}
                       onClick={() => setIsMenuOpen(false)}
                       className={cn(
-                        'text-lg font-medium transition-colors hover:text-primary',
+                        'text-lg font-medium transition-colors hover:text-primary flex items-center gap-2',
                         pathname === link.href ? 'text-primary' : 'text-muted-foreground'
                       )}
                     >
                       {link.label}
+                       {link.isNew && (
+                        <span className="bg-accent/80 text-accent-foreground text-xs font-bold px-2 py-0.5 rounded-full">
+                          NEW
+                        </span>
+                      )}
                     </Link>
                   ))}
                 </nav>
