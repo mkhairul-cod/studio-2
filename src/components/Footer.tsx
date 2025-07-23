@@ -10,7 +10,7 @@ const WhatsAppIcon = () => (
 
 export default function Footer() {
   const WHATSAPP_LINK =
-    'https://api.whatsapp.com/send?phone=6281234567890&text=Halo%20Simpul%20Academy,%20saya%20tertarik%20dengan%20layanan%20Anda.';
+    'https://api.whatsapp.com/send?phone=6285262608383&text=Halo%20Simpul%20Academy,%20saya%20tertarik%20dengan%20layanan%20Anda.';
 
   return (
     <footer className="bg-primary/5 border-t">
@@ -44,11 +44,11 @@ export default function Footer() {
             <ul className="space-y-3 text-sm">
               <li className="flex items-center gap-3">
                 <Mail className="h-4 w-4 text-primary" />
-                <span className="text-muted-foreground">contact@simpul.academy</span>
+                <span className="text-muted-foreground">simpul.project.academy@gmail.com</span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="h-4 w-4 text-primary" />
-                <span className="text-muted-foreground">+62 812-3456-7890</span>
+                <span className="text-muted-foreground">+62 852-6260-8383</span>
               </li>
               <li className="flex items-start gap-3">
                 <MapPin className="h-4 w-4 text-primary mt-1 flex-shrink-0" />
