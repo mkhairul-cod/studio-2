@@ -54,14 +54,14 @@ const services = [
 
 const team = [
   {
-    name: 'Muhammad Khairul',
-    role: 'Founder & Director',
+    name: 'Muhammad Khairul, S.Pd, M.Pd',
+    role: 'Direktur Utama',
     image: 'https://placehold.co/150x150.png',
     dataAiHint: 'professional man',
   },
   {
-    name: 'Ahmad Fauzi',
-    role: 'Head of Academic Services',
+    name: 'Dr. Nurul Fajri Saminan, S.Pd, M.Pd',
+    role: 'Direktur Program & Penelitian',
     image: 'https://placehold.co/150x150.png',
     dataAiHint: 'smiling man',
   },
@@ -81,28 +81,28 @@ const team = [
 
 const testimonials = [
   {
-    name: 'Rina Sari, M.Kom',
+    name: 'Dosen, Universitas Swasta',
     comment:
       'Layanan konversi skripsi sangat membantu. Prosesnya cepat dan hasilnya memuaskan. Artikel saya berhasil terbit di jurnal SINTA 2.',
     image: 'https://placehold.co/100x100.png',
     dataAiHint: 'happy student',
   },
   {
-    name: 'Dr. Adi Nugroho',
+    name: 'Peneliti, LIPI',
     comment:
       'Proofreading yang teliti dan profesional. Naskah saya menjadi jauh lebih baik dan diterima di konferensi internasional. Sangat direkomendasikan!',
     image: 'https://placehold.co/100x100.png',
     dataAiHint: 'professor',
   },
   {
-    name: 'Fitriani, S.Pd',
+    name: 'Guru, SMAN 3 Jakarta',
     comment:
       'Tanpa pendampingan dari Simpul Academy, saya mungkin masih bingung dengan proses publikasi. Terima kasih banyak!',
     image: 'https://placehold.co/100x100.png',
     dataAiHint: 'graduate woman',
   },
   {
-    name: 'Mahasiswa Pascasarjana UGM',
+    name: 'Mahasiswa Pascasarjana, UGM',
     comment:
       'Pelatihan academic writing-nya sangat membuka wawasan. Banyak tips praktis yang bisa langsung diterapkan. Pematerinya juga sangat kompeten.',
     image: 'https://placehold.co/100x100.png',
@@ -163,7 +163,7 @@ export default function Home() {
         </section>
 
         {/* Scrolling Ticker Section */}
-        <section className="bg-primary text-primary-foreground py-3 overflow-hidden relative z-10 -mt-16">
+        <section className="bg-primary text-primary-foreground py-3 overflow-hidden relative">
             <div className="relative">
                 <div className="flex whitespace-nowrap animate-scroll">
                     <div className="flex-shrink-0 px-8 font-semibold"><TickerText /></div>
@@ -216,7 +216,7 @@ export default function Home() {
               </h2>
               <p className="text-md text-muted-foreground max-w-2xl mx-auto mt-2">
                 Dipandu oleh para profesional muda yang bersemangat dalam dunia
-                akademik.
+                akademik dan inovasi digital.
               </p>
             </div>
             <div className="flex flex-wrap justify-center gap-8">

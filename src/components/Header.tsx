@@ -13,6 +13,7 @@ const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/layanan', label: 'Layanan' },
   { href: '/tentang-kami', label: 'Tentang Kami' },
+  { href: '/mitra', label: 'Mitra' },
   { href: '/kontak', label: 'Kontak' },
 ];
 

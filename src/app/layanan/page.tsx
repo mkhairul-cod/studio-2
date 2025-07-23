@@ -14,6 +14,9 @@ import {
   BarChart,
   FileText,
   Image as ImageIcon,
+  Globe,
+  AppWindow,
+  FileCode,
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -81,6 +84,21 @@ const services = [
     title: 'Penyusunan Referensi',
     description: 'Perapian daftar pustaka dan sitasi sesuai gaya (APA, MLA, Chicago) menggunakan Mendeley/Zotero.',
   },
+  {
+    icon: Globe,
+    title: 'Pembuatan Web Pribadi',
+    description: 'Bangun portofolio digital Anda dengan website pribadi yang profesional dan modern.',
+  },
+  {
+    icon: AppWindow,
+    title: 'Aplikasi Web-Based',
+    description: 'Kembangkan aplikasi berbasis web untuk penelitian, pengajaran, atau kebutuhan bisnis Anda.',
+  },
+  {
+    icon: FileCode,
+    title: 'Modul Digital Interaktif',
+    description: 'Transformasi materi ajar menjadi modul digital yang menarik dan interaktif untuk siswa.',
+  },
 ];
 
 const galleryImages = [
@@ -98,12 +116,10 @@ export default function LayananPage() {
       <div className="container mx-auto px-4 py-16 md:py-24">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-headline font-bold text-primary">
-            Layanan Akademik Kami
+            Layanan Akademik & Digital Kami
           </h1>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto mt-4">
-            Solusi terintegrasi untuk mendukung kesuksesan publikasi ilmiah
-            Anda. Kami hadir untuk memudahkan setiap langkah perjalanan akademik
-            Anda.
+            Solusi terintegrasi untuk mendukung kesuksesan publikasi ilmiah dan transformasi digital Anda.
           </p>
         </div>
 
