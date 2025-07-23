@@ -17,6 +17,7 @@ import {
   Globe,
   AppWindow,
   FileCode,
+  Award,
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -98,6 +99,11 @@ const services = [
     icon: FileCode,
     title: 'Modul Digital Interaktif',
     description: 'Transformasi materi ajar menjadi modul digital yang menarik dan interaktif untuk siswa.',
+  },
+  {
+    icon: Award,
+    title: 'Coaching Persiapan LPDP (Gratis)',
+    description: 'Bimbingan intensif persiapan beasiswa LPDP, dari esai hingga wawancara. Kelas dibuka jika terkumpul minimal 2 peserta.',
   },
 ];
 
