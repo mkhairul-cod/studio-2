@@ -12,6 +12,7 @@ import {
   MessageCircle,
   Users,
   Briefcase,
+  Award,
 } from 'lucide-react';
 import React from 'react';
 import Autoplay from "embla-carousel-autoplay"
@@ -351,6 +352,34 @@ export default function Home() {
             </Carousel>
           </div>
         </section>
+
+        {/* Special Program Section */}
+        <section id="special-program" className="py-16 md:py-24 bg-primary/5">
+            <div className="container mx-auto px-4">
+                <div className="bg-card rounded-lg shadow-xl p-8 md:p-12 border border-primary/20 flex flex-col md:flex-row items-center gap-8">
+                    <div className="p-4 bg-accent/20 rounded-full">
+                        <Award className="w-16 h-16 text-accent-foreground" />
+                    </div>
+                    <div className="text-center md:text-left flex-grow">
+                        <h2 className="text-2xl md:text-3xl font-headline font-bold text-primary">
+                            Program Spesial: Coaching Beasiswa LPDP (Gratis!)
+                        </h2>
+                        <p className="text-muted-foreground mt-2 max-w-2xl">
+                            Raih mimpimu studi lanjut dengan beasiswa LPDP. Kami membuka kelas bimbingan intensif gratis untuk persiapan dari esai hingga wawancara. Kelas dibuka jika terkumpul minimal 2 peserta.
+                        </p>
+                    </div>
+                    <div className="flex-shrink-0">
+                         <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg">
+                            <Link href="/order">
+                                Amankan Tempat Anda
+                                <ArrowRight className="ml-2 h-5 w-5"/>
+                            </Link>
+                        </Button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
       </main>
     </div>
   );

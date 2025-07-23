@@ -23,6 +23,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
+import { cn } from '@/lib/utils';
+
 
 const services = [
   {
@@ -104,6 +106,7 @@ const services = [
     icon: Award,
     title: 'Coaching Persiapan LPDP (Gratis)',
     description: 'Bimbingan intensif persiapan beasiswa LPDP, dari esai hingga wawancara. Kelas dibuka jika terkumpul minimal 2 peserta.',
+    isFeatured: true,
   },
 ];
 
@@ -131,7 +134,7 @@ export default function LayananPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service, index) => (
-            <Card key={index} className="flex flex-col hover:shadow-lg transition-shadow duration-300">
+            <Card key={index} className={cn("flex flex-col hover:shadow-lg transition-shadow duration-300", service.isFeatured && "border-2 border-primary bg-primary/5")}>
               <CardHeader className="flex flex-row items-center gap-4 pb-4">
                 <div className="bg-primary/10 p-3 rounded-lg">
                   <service.icon className="w-6 h-6 text-primary" />
@@ -140,7 +143,7 @@ export default function LayananPage() {
               </CardHeader>
               <CardContent className="flex flex-col flex-grow pt-0">
                 <p className="text-muted-foreground text-sm flex-grow mb-4">{service.description}</p>
-                <Button asChild size="sm" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground mt-auto">
+                <Button asChild size="sm" className={cn("w-full mt-auto", service.isFeatured ? "bg-primary text-primary-foreground hover:bg-primary/90" : "bg-accent hover:bg-accent/90 text-accent-foreground")}>
                     <Link href="/order">Pesan Layanan</Link>
                 </Button>
               </CardContent>
