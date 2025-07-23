@@ -13,6 +13,9 @@ import {
   Users,
   Briefcase,
 } from 'lucide-react';
+import React from 'react';
+import Autoplay from "embla-carousel-autoplay"
+
 
 import { Button } from '@/components/ui/button';
 import {
@@ -133,90 +136,91 @@ const TickerText = () => (
     </>
 );
 
+const slides = [
+    {
+        title: "Wujudkan Publikasi Ilmiah Anda",
+        description: "Simpul Academy menyediakan layanan akademik profesional untuk membantu peneliti, dosen, dan mahasiswa dalam mencapai target publikasi.",
+        buttons: [
+            { text: "Mulai Proyek Anda", href: "/order", variant: "accent" },
+            { text: "Konsultasi Gratis", href: "/kontak", variant: "outline", icon: MessageCircle }
+        ],
+        image: { src: "https://placehold.co/1200x800.png", dataAiHint: "researcher presentation" }
+    },
+    {
+        title: "Bangun Peluang & Jadi Mitra Kami",
+        description: "Buka peluang penghasilan tambahan dan perluas jaringan Anda dengan menjadi mitra Simpul Academy. Mari tumbuh dan berkolaborasi bersama kami.",
+        buttons: [
+            { text: "Jadi Mitra Kami", href: "/mitra#join-mitra", variant: "accent", icon: Users },
+            { text: "Lihat Layanan", href: "/layanan", variant: "outline", icon: Briefcase }
+        ],
+        image: { src: "https://placehold.co/1200x800.png", dataAiHint: "team collaboration" }
+    },
+    {
+        title: "Asah Kemampuan, Cari Solusi",
+        description: "Ayo tingkatkan skill menulis, meneliti, menganalisis masalah, dan berbagi ide untuk mencari solusi bersama melalui program pelatihan kami.",
+        buttons: [
+            { text: "Lihat Pelatihan", href: "/layanan", variant: "accent", icon: Presentation },
+            { text: "Hubungi Kami", href: "/kontak", variant: "outline", icon: MessageCircle }
+        ],
+        image: { src: "https://placehold.co/1200x800.png", dataAiHint: "online workshop" }
+    }
+];
+
 export default function Home() {
+
+  const plugin = React.useRef(
+    Autoplay({ delay: 5000, stopOnInteraction: true })
+  )
+
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex-grow">
         {/* Hero Section */}
         <section
           id="hero"
-          className="relative bg-primary/5 w-full"
+          className="relative bg-primary/5 w-full overflow-hidden"
         >
           <Carousel
+            plugins={[plugin.current]}
             opts={{ loop: true }}
             className="w-full"
+            onMouseEnter={plugin.current.stop}
+            onMouseLeave={plugin.current.reset}
           >
             <CarouselContent>
-              <CarouselItem>
-                <div className="container mx-auto px-4 h-[70vh] md:h-[60vh] flex flex-col justify-center text-center">
-                  <h1 className="text-4xl md:text-6xl font-headline font-bold text-primary mb-4">
-                    Wujudkan Publikasi Ilmiah Anda
-                  </h1>
-                  <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-                    Simpul Academy menyediakan layanan akademik profesional untuk membantu
-                    peneliti, dosen, dan mahasiswa dalam mencapai target publikasi.
-                  </p>
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
-                      <Link href="/order">Mulai Proyek Anda</Link>
-                    </Button>
-                     <Button asChild size="lg" variant="outline" className="border-primary/30">
-                      <Link href="/kontak">
-                        <MessageCircle className="mr-2 h-5 w-5"/>
-                        Konsultasi Gratis
-                      </Link>
-                    </Button>
-                  </div>
-                </div>
-              </CarouselItem>
-              <CarouselItem>
-                <div className="container mx-auto px-4 h-[70vh] md:h-[60vh] flex flex-col justify-center text-center">
-                  <h1 className="text-4xl md:text-6xl font-headline font-bold text-primary mb-4">
-                    Bangun Peluang & Jadi Mitra Kami
-                  </h1>
-                  <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-                    Buka peluang penghasilan tambahan dan perluas jaringan Anda dengan menjadi mitra Simpul Academy. Mari tumbuh dan berkolaborasi bersama kami.
-                  </p>
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
-                      <Link href="/mitra#join-mitra">
-                        <Users className="mr-2 h-5 w-5" />
-                        Jadi Mitra Kami
-                      </Link>
-                    </Button>
-                     <Button asChild size="lg" variant="outline" className="border-primary/30">
-                        <Link href="/layanan">
-                            <Briefcase className="mr-2 h-5 w-5" />
-                            Lihat Layanan
-                        </Link>
-                    </Button>
-                  </div>
-                </div>
-              </CarouselItem>
-              <CarouselItem>
-                 <div className="container mx-auto px-4 h-[70vh] md:h-[60vh] flex flex-col justify-center text-center">
-                  <h1 className="text-4xl md:text-6xl font-headline font-bold text-primary mb-4">
-                    Asah Kemampuan, Cari Solusi
-                  </h1>
-                  <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-                    Ayo tingkatkan skill menulis, meneliti, menganalisis masalah, dan berbagi ide untuk mencari solusi bersama melalui program pelatihan kami.
-                  </p>
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
-                       <Link href="/layanan">
-                        <Presentation className="mr-2 h-5 w-5"/>
-                        Lihat Pelatihan
-                      </Link>
-                    </Button>
-                     <Button asChild size="lg" variant="outline" className="border-primary/30">
-                       <Link href="/kontak">
-                        <MessageCircle className="mr-2 h-5 w-5"/>
-                        Hubungi Kami
-                      </Link>
-                    </Button>
-                  </div>
-                </div>
-              </CarouselItem>
+              {slides.map((slide, index) => (
+                <CarouselItem key={index}>
+                    <div className="relative w-full h-[80vh] md:h-[70vh]">
+                        <Image
+                            src={slide.image.src}
+                            alt={slide.title}
+                            layout="fill"
+                            objectFit="cover"
+                            className="opacity-20"
+                            data-ai-hint={slide.image.dataAiHint}
+                        />
+                         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+                        <div className="container mx-auto px-4 h-full flex flex-col justify-center text-center relative z-10">
+                            <h1 className="text-4xl md:text-6xl font-headline font-bold text-primary mb-4">
+                                {slide.title}
+                            </h1>
+                            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
+                                {slide.description}
+                            </p>
+                            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                                {slide.buttons.map((button, btnIndex) => (
+                                     <Button key={btnIndex} asChild size="lg" className={button.variant === 'accent' ? 'bg-accent hover:bg-accent/90 text-accent-foreground' : 'border-primary/30' } variant={button.variant === 'accent' ? 'default' : 'outline'}>
+                                        <Link href={button.href}>
+                                            {button.icon && <button.icon className="mr-2 h-5 w-5"/>}
+                                            {button.text}
+                                        </Link>
+                                    </Button>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </CarouselItem>
+              ))}
             </CarouselContent>
             <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 hidden md:flex" />
             <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 hidden md:flex" />
@@ -351,5 +355,3 @@ export default function Home() {
     </div>
   );
 }
-
-    
