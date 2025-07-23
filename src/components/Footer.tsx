@@ -32,11 +32,11 @@ export default function Footer() {
             <h3 className="font-headline font-bold text-primary mb-4">Tautan Cepat</h3>
             <ul className="space-y-2">
               <li><Link href="/layanan" className="text-sm text-muted-foreground hover:text-primary transition-colors">Layanan</Link></li>
+              <li><Link href="/artikel" className="text-sm text-muted-foreground hover:text-primary transition-colors">Artikel</Link></li>
               <li><Link href="/tentang-kami" className="text-sm text-muted-foreground hover:text-primary transition-colors">Tentang Kami</Link></li>
               <li><Link href="/mitra" className="text-sm text-muted-foreground hover:text-primary transition-colors">Mitra</Link></li>
               <li><Link href="/kontak" className="text-sm text-muted-foreground hover:text-primary transition-colors">Kontak</Link></li>
               <li><Link href="/order" className="text-sm text-muted-foreground hover:text-primary transition-colors">Pesan Layanan</Link></li>
-              <li><Link href="/#testimonials" className="text-sm text-muted-foreground hover:text-primary transition-colors">Testimoni</Link></li>
             </ul>
           </div>
 

@@ -12,6 +12,7 @@ import { cn } from '@/lib/utils';
 const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/layanan', label: 'Layanan' },
+  { href: '/artikel', label: 'Artikel' },
   { href: '/tentang-kami', label: 'Tentang Kami' },
   { href: '/mitra', label: 'Mitra' },
   { href: '/kontak', label: 'Kontak' },
