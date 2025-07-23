@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { University, Phone, Mail, MapPin } from 'lucide-react';
+import { University, Phone, Mail, MapPin, Users } from 'lucide-react';
 
 const WhatsAppIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5 text-white">
@@ -80,7 +80,18 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 border-t pt-8 text-center text-sm text-muted-foreground">
+        {/* Visitor Stats Placeholder */}
+        <div className="mt-12 pt-8 border-t text-center">
+            <h3 className="text-sm font-semibold text-muted-foreground mb-2">STATISTIK PENGUNJUNG</h3>
+            <div className="flex items-center justify-center gap-2 text-muted-foreground">
+                <Users className="h-5 w-5" />
+                <span className="font-bold text-lg text-primary">1,234</span>
+            </div>
+            <p className="text-xs text-muted-foreground/80 mt-1">(Placeholder)</p>
+        </div>
+
+
+        <div className="mt-8 border-t pt-8 text-center text-sm text-muted-foreground">
           <p>&copy; {new Date().getFullYear()} CV Simpul Project Academy. All rights reserved.</p>
         </div>
       </div>
