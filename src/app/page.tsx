@@ -7,6 +7,7 @@ import {
   Presentation,
   Star,
   ArrowRight,
+  MessageCircle,
 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -107,6 +108,27 @@ const testimonials = [
   },
 ];
 
+const TickerText = () => (
+    <>
+      <span>
+        Jasa Konversi Skripsi ke Jurnal
+      </span>
+      <span className="mx-4 text-accent">•</span>
+      <span>
+        Academic Proofreading Profesional
+      </span>
+      <span className="mx-4 text-accent">•</span>
+      <span>
+        Pendampingan Publikasi Jurnal SINTA & Scopus
+      </span>
+      <span className="mx-4 text-accent">•</span>
+      <span>
+        Pelatihan Penulisan Akademik Intensif
+      </span>
+      <span className="mx-4 text-accent">•</span>
+    </>
+);
+
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
@@ -114,7 +136,7 @@ export default function Home() {
         {/* Hero Section */}
         <section
           id="hero"
-          className="bg-primary/5 text-center py-20 md:py-32"
+          className="bg-primary/5 text-center pt-20 md:pt-32 pb-12 md:pb-16"
         >
           <div className="container mx-auto px-4">
             <h1 className="text-4xl md:text-6xl font-headline font-bold text-primary mb-4">
@@ -124,10 +146,28 @@ export default function Home() {
               Simpul Academy menyediakan layanan akademik profesional untuk membantu
               peneliti, dosen, dan mahasiswa dalam mencapai target publikasi.
             </p>
-            <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
-              <Link href="/order">Mulai Proyek Anda</Link>
-            </Button>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
+                <Link href="/order">Mulai Proyek Anda</Link>
+              </Button>
+               <Button asChild size="lg" variant="outline" className="border-primary/30">
+                <Link href="/kontak">
+                  <MessageCircle className="mr-2 h-5 w-5"/>
+                  Konsultasi Gratis
+                </Link>
+              </Button>
+            </div>
           </div>
+        </section>
+
+        {/* Scrolling Ticker Section */}
+        <section className="bg-primary text-primary-foreground py-3 overflow-hidden">
+            <div className="relative">
+                <div className="flex whitespace-nowrap animate-scroll">
+                    <div className="flex-shrink-0 px-8 font-semibold"><TickerText /></div>
+                    <div className="flex-shrink-0 px-8 font-semibold"><TickerText /></div>
+                </div>
+            </div>
         </section>
 
         {/* Services Section */}
