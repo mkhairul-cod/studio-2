@@ -1,7 +1,9 @@
 import Image from 'next/image';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Users, FileText, Landmark, Target, BookOpen, Lightbulb } from 'lucide-react';
+import { Users, FileText, Landmark, Target, BookOpen, UserCircle } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+
 
 export default function TentangKamiPage() {
   return (
@@ -14,13 +16,23 @@ export default function TentangKamiPage() {
                 alt="Simpul Academy Logo Background"
                 layout="fill"
                 objectFit="cover"
-                className="opacity-10"
+                className="opacity-5"
                 data-ai-hint="logo background"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent" />
         </div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center">
+             <div className="flex justify-center mb-4">
+               <Image
+                src="https://storage.googleapis.com/project-spark-34116.appspot.com/6c91a32a-57b1-4778-838b-826075908f4c_1.png"
+                alt="Simpul Academy Logo"
+                width={100}
+                height={100}
+                className="rounded-full shadow-lg"
+                data-ai-hint="company logo"
+              />
+            </div>
             <h1 className="text-4xl md:text-5xl font-headline font-bold text-primary">
               Tentang Simpul Academy
             </h1>
@@ -119,56 +131,63 @@ export default function TentangKamiPage() {
                 <CardHeader>
                   <CardTitle className="font-headline text-2xl text-primary flex items-center gap-3">
                     <Users />
-                    Struktur Organisasi
+                    Tim Inti & Struktur Organisasi
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4 text-muted-foreground">
-                  <div className="p-4 bg-primary/5 rounded-lg text-center">
-                    <h3 className="font-bold text-primary">Direktur Utama</h3>
-                    <p>Muhammad Khairul, S.Pd, M.Pd</p>
+                <CardContent className="space-y-8 text-center text-muted-foreground">
+                  
+                  {/* Founder/Director Section */}
+                  <div className="p-4 bg-primary/5 rounded-lg border border-primary/20">
+                    <Avatar className="w-24 h-24 mx-auto mb-4 ring-2 ring-primary">
+                        <AvatarImage src="https://placehold.co/150x150.png" data-ai-hint="professional man" />
+                        <AvatarFallback>MK</AvatarFallback>
+                    </Avatar>
+                    <h3 className="font-bold text-lg text-primary">Muhammad Khairul, S.Pd, M.Pd</h3>
+                    <p className="text-sm font-semibold text-primary/80">Direktur Utama (Pendiri)</p>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="p-4 bg-primary/5 rounded-lg text-center">
-                      <h3 className="font-bold text-primary">Direktur Program & Penelitian</h3>
-                      <p>Dr. Nurul Fajri Saminan, S.Pd, M.Pd</p>
+                  
+                  {/* Directors Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="p-4 bg-background rounded-lg border">
+                        <Avatar className="w-20 h-20 mx-auto mb-3">
+                            <AvatarImage src="https://placehold.co/150x150.png" data-ai-hint="smiling man glasses" />
+                            <AvatarFallback>NF</AvatarFallback>
+                        </Avatar>
+                        <h3 className="font-bold text-card-foreground">Dr. Nurul Fajri Saminan, S.Pd, M.Pd</h3>
+                        <p className="text-sm text-muted-foreground">Direktur Program & Penelitian</p>
                     </div>
-                    <div className="p-4 bg-primary/5 rounded-lg text-center">
-                      <h3 className="font-bold text-primary">Direktur Keuangan & Administrasi</h3>
-                      <p>Ruhul Hilyati, S.T</p>
-                      <p className="text-sm">Wadir: Sarah Azkia Marta, S.T</p>
+                    <div className="p-4 bg-background rounded-lg border">
+                        <Avatar className="w-20 h-20 mx-auto mb-3">
+                            <AvatarImage src="https://placehold.co/150x150.png" data-ai-hint="professional woman hijab" />
+                            <AvatarFallback>RH</AvatarFallback>
+                        </Avatar>
+                        <h3 className="font-bold text-card-foreground">Ruhul Hilyati, S.T</h3>
+                        <p className="text-sm text-muted-foreground">Direktur Keuangan & Admin.</p>
+                         <p className="text-xs text-muted-foreground mt-1">Wadir: Sarah Azkia Marta, S.T</p>
                     </div>
-                    <div className="p-4 bg-primary/5 rounded-lg text-center">
-                      <h3 className="font-bold text-primary">Direktur Hubungan & Pengembangan Bisnis</h3>
-                      <p>Amri Hikary, S.H</p>
-                      <p className="text-sm">Wadir: Fathin Afif, S.T</p>
+                    <div className="p-4 bg-background rounded-lg border">
+                         <Avatar className="w-20 h-20 mx-auto mb-3">
+                            <AvatarImage src="https://placehold.co/150x150.png" data-ai-hint="professional man formal" />
+                            <AvatarFallback>AH</AvatarFallback>
+                        </Avatar>
+                        <h3 className="font-bold text-card-foreground">Amri Hikary, S.H</h3>
+                        <p className="text-sm text-muted-foreground">Direktur Hubungan & Bisnis</p>
+                        <p className="text-xs text-muted-foreground mt-1">Wadir: Fathin Afif, S.T</p>
                     </div>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                     <div className="p-4 bg-primary/5 rounded-lg text-center">
-                      <h3 className="font-bold text-primary">Bidang Pelatihan & Pendidikan</h3>
-                      <p>Muhammad Wafiq Afansa, S.Mat</p>
-                    </div>
-                     <div className="p-4 bg-primary/5 rounded-lg text-center">
-                      <h3 className="font-bold text-primary">Bidang Publikasi & Literasi</h3>
-                      <p>Nada Ariqah, S.Si</p>
-                    </div>
-                    <div className="p-4 bg-primary/5 rounded-lg text-center">
-                      <h3 className="font-bold text-primary">Bidang IT & Media Digital</h3>
-                      <p>&nbsp;</p>
-                    </div>
-                  </div>
-                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                     <div className="p-4 bg-primary/5 rounded-lg text-center">
-                        <h3 className="font-bold text-primary mb-2">Tim Peneliti & Instruktur</h3>
-                        <p>Zahlul Nugraha, S.T</p>
-                        <p>M. Abian Haikal Fauzan, S.E</p>
-                      </div>
-                       <div className="p-4 bg-primary/5 rounded-lg text-center">
-                        <h3 className="font-bold text-primary mb-2">Staf Administrasi & Operasional</h3>
-                        <p>Muhammad Furqan, S.Si</p>
-                        <p>Rifangga, S.E</p>
-                      </div>
-                  </div>
+
+                  {/* Other Teams */}
+                   <div className="text-left pt-4 border-t">
+                     <h3 className="font-headline text-xl text-primary mb-4 text-center">Tim & Bidang Lainnya</h3>
+                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <div className="p-3 bg-primary/5 rounded-md"><strong>Bidang Pelatihan & Pendidikan:</strong> Muhammad Wafiq Afansa, S.Mat</div>
+                        <div className="p-3 bg-primary/5 rounded-md"><strong>Bidang Publikasi & Literasi:</strong> Nada Ariqah, S.Si</div>
+                        <div className="p-3 bg-primary/5 rounded-md"><strong>Tim Peneliti & Instruktur:</strong> Zahlul Nugraha, S.T, M. Abian Haikal Fauzan, S.E</div>
+                        <div className="p-3 bg-primary/5 rounded-md"><strong>Staf Administrasi & Operasional:</strong> Muhammad Furqan, S.Si, Rifangga, S.E</div>
+                        <div className="p-3 bg-primary/5 rounded-md md:col-span-2 text-center"><strong>Bidang IT & Media Digital</strong></div>
+                     </div>
+                   </div>
+
                 </CardContent>
               </Card>
             </TabsContent>
