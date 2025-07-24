@@ -1,10 +1,14 @@
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+'use client';
+
+import { useState } from 'react';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, Calendar, Tag, Sparkles } from 'lucide-react';
+import { ArrowRight, Calendar, Tag, Sparkles, Filter } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
-const placeholderArticles = [
+const allArticles = [
   {
     title: 'AI dalam Penelitian: Kawan atau Lawan? Etika & Pemanfaatan',
     category: 'Teknologi AI',
@@ -35,9 +39,47 @@ const placeholderArticles = [
     link: '#',
     isNew: false,
   },
+  {
+    title: 'Strategi Jitu Tembus Jurnal Scopus untuk Pemula',
+    category: 'Publikasi Ilmiah',
+    date: '10 Juli 2024',
+    summary: 'Publikasi di jurnal Scopus bukan lagi mimpi. Ikuti panduan langkah demi langkah mulai dari penentuan topik hingga strategi submit yang efektif.',
+    image: 'https://placehold.co/800x400.png',
+    dataAiHint: 'magnifying glass journal',
+    link: '#',
+    isNew: false,
+  },
+  {
+    title: 'Memanfaatkan Zotero untuk Manajemen Referensi Anti Pusing',
+    category: 'Tips Menulis',
+    date: '8 Juli 2024',
+    summary: 'Ucapkan selamat tinggal pada daftar pustaka berantakan. Kuasai Zotero untuk mengelola sitasi dan referensi secara otomatis dan konsisten.',
+    image: 'https://placehold.co/800x400.png',
+    dataAiHint: 'bookshelf organization',
+    link: '#',
+    isNew: false,
+  },
+  {
+    title: 'Masa Depan Pendidikan: Peran AI Generatif di Ruang Kelas',
+    category: 'Teknologi AI',
+    date: '5 Juli 2024',
+    summary: 'Bagaimana AI generatif seperti ChatGPT dapat diintegrasikan dalam kurikulum untuk meningkatkan kreativitas dan pemikiran kritis siswa?',
+    image: 'https://placehold.co/800x400.png',
+    dataAiHint: 'classroom technology',
+    link: '#',
+    isNew: false,
+  },
 ];
 
+const categories = ['Semua', 'Teknologi AI', 'Publikasi Ilmiah', 'Tips Menulis'];
+
 export default function ArtikelPage() {
+  const [activeCategory, setActiveCategory] = useState('Semua');
+
+  const filteredArticles = activeCategory === 'Semua'
+    ? allArticles
+    : allArticles.filter(article => article.category === activeCategory);
+
   return (
     <div className="bg-background">
       <div className="container mx-auto px-4 py-16 md:py-24">
@@ -50,15 +92,30 @@ export default function ArtikelPage() {
           </p>
         </div>
 
+        {/* Category Filters */}
+        <div className="flex flex-wrap items-center justify-center gap-2 md:gap-4 mb-12">
+           <Filter className="w-5 h-5 text-muted-foreground hidden sm:block" />
+           {categories.map(category => (
+            <Button
+              key={category}
+              variant={activeCategory === category ? 'default' : 'outline'}
+              onClick={() => setActiveCategory(category)}
+              className={cn("rounded-full px-6", activeCategory === category && "bg-accent text-accent-foreground hover:bg-accent/90")}
+            >
+              {category}
+            </Button>
+          ))}
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {placeholderArticles.map((article, index) => (
+          {filteredArticles.map((article, index) => (
             <Card key={index} className="flex flex-col overflow-hidden hover:shadow-xl transition-shadow duration-300 group">
               <Link href={article.link} className="block">
                 <div className="relative h-48 w-full overflow-hidden">
                   <Image
                     src={article.image}
                     alt={article.title}
-                    layout="fill"
+                    fill
                     objectFit="cover"
                     data-ai-hint={article.dataAiHint}
                     className="transition-transform duration-300 group-hover:scale-105"
@@ -102,6 +159,14 @@ export default function ArtikelPage() {
           ))}
         </div>
         
+        {filteredArticles.length === 0 && (
+          <div className="text-center mt-16 col-span-full">
+            <p className="text-muted-foreground text-lg">
+              Belum ada artikel untuk kategori ini.
+            </p>
+          </div>
+        )}
+
         <div className="text-center mt-16">
             <p className="text-muted-foreground">Konten baru akan segera hadir. Nantikan terus wawasan terbaru dari kami!</p>
         </div>
