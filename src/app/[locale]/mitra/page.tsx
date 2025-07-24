@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useState } from 'react';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -46,6 +47,7 @@ const partners = [
 ]
 
 export default function MitraPage() {
+  const t = useTranslations('PartnersPage');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
@@ -98,10 +100,10 @@ export default function MitraPage() {
       <section className="bg-primary/5 py-20 md:py-24">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-headline font-bold text-primary">
-            Mitra Strategis Kami
+            {t('title')}
           </h1>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto mt-4">
-            Kolaborasi adalah kunci. Kami bangga dapat bekerjasama dengan berbagai institusi terkemuka untuk memajukan dunia akademik Indonesia.
+            {t('description')}
           </p>
         </div>
       </section>
@@ -110,7 +112,7 @@ export default function MitraPage() {
       <section className="py-16 md:py-24">
          <div className="container mx-auto px-4">
             <div className="text-center mb-12">
-                <h2 className="text-3xl font-headline font-bold text-primary flex items-center justify-center gap-3"><Building2 /> Institusi Mitra</h2>
+                <h2 className="text-3xl font-headline font-bold text-primary flex items-center justify-center gap-3"><Building2 /> {t('partner_institutions')}</h2>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-6">
                 {partners.map(p => (
@@ -128,10 +130,10 @@ export default function MitraPage() {
         <div className="container mx-auto px-4">
           <div className="mb-12 text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline flex items-center justify-center gap-3">
-              <Handshake /> Jadilah Mitra Kami
+              <Handshake /> {t('join_us_title')}
             </h2>
             <p className="mx-auto mt-4 max-w-3xl text-lg text-muted-foreground">
-              Kami membuka peluang kolaborasi dengan institusi pendidikan, lembaga penelitian, komunitas, maupun perusahaan. Mari bersinergi!
+              {t('join_us_description')}
             </p>
           </div>
 
@@ -142,21 +144,21 @@ export default function MitraPage() {
                     <MailCheck className="h-12 w-12 text-green-600" />
                     </div>
                     <CardTitle className="font-headline text-3xl text-primary mt-4">
-                    Proposal Terkirim!
+                    {t('success_title')}
                     </CardTitle>
                 </CardHeader>
                 <CardContent>
                     <p className="text-muted-foreground">
-                    Terima kasih atas minat Anda untuk berkolaborasi. Tim kami akan segera meninjau proposal Anda dan akan menghubungi Anda.
+                    {t('success_description')}
                     </p>
                 </CardContent>
              </Card>
           ) : (
             <Card className="mx-auto w-full max-w-2xl">
                 <CardHeader>
-                    <CardTitle className="font-headline">Formulir Pengajuan Kemitraan</CardTitle>
+                    <CardTitle className="font-headline">{t('form_title')}</CardTitle>
                     <CardDescription>
-                    Mohon isi detail di bawah ini dan kami akan segera menghubungi Anda.
+                    {t('form_description')}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -167,9 +169,9 @@ export default function MitraPage() {
                         name="organization"
                         render={({ field }) => (
                             <FormItem>
-                            <FormLabel>Nama Institusi/Organisasi</FormLabel>
+                            <FormLabel>{t('form_org_label')}</FormLabel>
                             <FormControl>
-                                <Input placeholder="Contoh: Universitas Gadjah Mada" {...field} />
+                                <Input placeholder={t('form_org_placeholder')} {...field} />
                             </FormControl>
                             <FormMessage />
                             </FormItem>
@@ -180,9 +182,9 @@ export default function MitraPage() {
                         name="name"
                         render={({ field }) => (
                             <FormItem>
-                            <FormLabel>Nama Narahubung (PIC)</FormLabel>
+                            <FormLabel>{t('form_name_label')}</FormLabel>
                             <FormControl>
-                                <Input placeholder="Nama Anda" {...field} />
+                                <Input placeholder={t('form_name_placeholder')} {...field} />
                             </FormControl>
                             <FormMessage />
                             </FormItem>
@@ -193,9 +195,9 @@ export default function MitraPage() {
                         name="email"
                         render={({ field }) => (
                             <FormItem>
-                            <FormLabel>Alamat Email</FormLabel>
+                            <FormLabel>{t('form_email_label')}</FormLabel>
                             <FormControl>
-                                <Input placeholder="email@institusi.com" {...field} />
+                                <Input placeholder={t('form_email_placeholder')} {...field} />
                             </FormControl>
                             <FormMessage />
                             </FormItem>
@@ -206,10 +208,10 @@ export default function MitraPage() {
                         name="proposal"
                         render={({ field }) => (
                             <FormItem>
-                            <FormLabel>Deskripsi Singkat Kolaborasi</FormLabel>
+                            <FormLabel>{t('form_proposal_label')}</FormLabel>
                             <FormControl>
                                 <Textarea
-                                placeholder="Jelaskan bentuk kerja sama yang Anda usulkan..."
+                                placeholder={t('form_proposal_placeholder')}
                                 rows={4}
                                 {...field}
                                 />
@@ -222,10 +224,10 @@ export default function MitraPage() {
                         {isSubmitting ? (
                             <>
                             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                            Mengirim...
+                            {t('submitting_button')}
                             </>
                         ) : (
-                            'Kirim Proposal Kemitraan'
+                            t('submit_button')
                         )}
                         </Button>
                     </form>

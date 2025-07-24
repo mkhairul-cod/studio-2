@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -38,6 +39,7 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 export default function KirimArtikelPage() {
+  const t = useTranslations('SubmitArticlePage');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
@@ -101,10 +103,10 @@ export default function KirimArtikelPage() {
                     <div className="mx-auto bg-green-100 p-4 rounded-full w-fit">
                         <CheckCircle className="w-12 h-12 text-green-600" />
                     </div>
-                    <CardTitle className="font-headline text-3xl text-primary mt-4">Naskah Terkirim!</CardTitle>
+                    <CardTitle className="font-headline text-3xl text-primary mt-4">{t('success_title')}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <p className="text-muted-foreground">Terima kasih telah mengirimkan tulisan Anda. Tim editor kami akan segera meninjau naskah Anda dan akan memberikan kabar melalui email dalam beberapa hari ke depan.</p>
+                    <p className="text-muted-foreground">{t('success_description')}</p>
                 </CardContent>
             </Card>
         </div>
@@ -116,40 +118,40 @@ export default function KirimArtikelPage() {
       <div className="container mx-auto px-4 py-16 md:py-24">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-headline font-bold text-primary">
-            Jadi Kontributor
+            {t('title')}
           </h1>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto mt-4">
-            Bagikan wawasan, penelitian, atau gagasan Anda kepada audiens yang lebih luas. Jadilah bagian dari komunitas akademik kami.
+            {t('description')}
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
             <div className="lg:col-span-1">
-                <h2 className="font-headline text-2xl text-primary mb-4">Panduan Penulis</h2>
+                <h2 className="font-headline text-2xl text-primary mb-4">{t('guidelines_title')}</h2>
                 <div className="space-y-4 text-muted-foreground p-6 bg-card border rounded-lg">
                     <div>
-                        <h3 className="font-bold text-card-foreground">Topik Relevan</h3>
-                        <p className="text-sm">Kami menerima tulisan seputar pendidikan, teknologi, metodologi penelitian, tips publikasi, dan isu-isu akademik lainnya.</p>
+                        <h3 className="font-bold text-card-foreground">{t('guideline1_title')}</h3>
+                        <p className="text-sm">{t('guideline1_text')}</p>
                     </div>
                      <div>
-                        <h3 className="font-bold text-card-foreground">Orisinalitas</h3>
-                        <p className="text-sm">Pastikan karya yang Anda kirim adalah tulisan asli dan belum pernah dipublikasikan di media lain.</p>
+                        <h3 className="font-bold text-card-foreground">{t('guideline2_title')}</h3>
+                        <p className="text-sm">{t('guideline2_text')}</p>
                     </div>
                      <div>
-                        <h3 className="font-bold text-card-foreground">Proses Review</h3>
-                        <p className="text-sm">Setiap naskah yang masuk akan melalui proses review oleh tim editor kami. Anda akan menerima notifikasi hasil review melalui email.</p>
+                        <h3 className="font-bold text-card-foreground">{t('guideline3_title')}</h3>
+                        <p className="text-sm">{t('guideline3_text')}</p>
                     </div>
                      <div>
-                        <h3 className="font-bold text-card-foreground">Format File</h3>
-                        <p className="text-sm">Mohon kirimkan naskah dalam format .doc, .docx, atau .pdf.</p>
+                        <h3 className="font-bold text-card-foreground">{t('guideline4_title')}</h3>
+                        <p className="text-sm">{t('guideline4_text')}</p>
                     </div>
                 </div>
             </div>
             <div className="lg:col-span-2">
                 <Card className="w-full">
                 <CardHeader>
-                    <CardTitle className="font-headline">Formulir Pengiriman Naskah</CardTitle>
-                    <CardDescription>Lengkapi semua kolom di bawah ini untuk mengirimkan tulisan Anda.</CardDescription>
+                    <CardTitle className="font-headline">{t('form_title')}</CardTitle>
+                    <CardDescription>{t('form_description')}</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <Form {...form}>
@@ -157,39 +159,39 @@ export default function KirimArtikelPage() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <FormField control={form.control} name="name" render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Nama Lengkap</FormLabel>
-                                <FormControl><Input placeholder="Nama Anda" {...field} /></FormControl>
+                                <FormLabel>{t('name_label')}</FormLabel>
+                                <FormControl><Input placeholder={t('name_placeholder')} {...field} /></FormControl>
                                 <FormMessage />
                             </FormItem>
                             )} />
                             <FormField control={form.control} name="affiliation" render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Afiliasi / Institusi</FormLabel>
-                                <FormControl><Input placeholder="Contoh: Universitas Indonesia" {...field} /></FormControl>
+                                <FormLabel>{t('affiliation_label')}</FormLabel>
+                                <FormControl><Input placeholder={t('affiliation_placeholder')} {...field} /></FormControl>
                                 <FormMessage />
                             </FormItem>
                             )} />
                         </div>
                         <FormField control={form.control} name="email" render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Alamat Email Kontak</FormLabel>
-                            <FormControl><Input type="email" placeholder="email@anda.com" {...field} /></FormControl>
+                            <FormLabel>{t('email_label')}</FormLabel>
+                            <FormControl><Input type="email" placeholder={t('email_placeholder')} {...field} /></FormControl>
                             <FormMessage />
                         </FormItem>
                         )} />
                         <FormField control={form.control} name="title" render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Judul Artikel</FormLabel>
-                            <FormControl><Input placeholder="Judul tulisan Anda" {...field} /></FormControl>
+                            <FormLabel>{t('article_title_label')}</FormLabel>
+                            <FormControl><Input placeholder={t('article_title_placeholder')} {...field} /></FormControl>
                             <FormMessage />
                         </FormItem>
                         )} />
                         <FormField control={form.control} name="abstract" render={({ field }) => (
                             <FormItem>
-                            <FormLabel>Abstrak / Ringkasan Singkat</FormLabel>
+                            <FormLabel>{t('abstract_label')}</FormLabel>
                             <FormControl>
                                 <Textarea
-                                placeholder="Jelaskan secara singkat isi tulisan Anda..."
+                                placeholder={t('abstract_placeholder')}
                                 rows={4}
                                 {...field}
                                 />
@@ -199,7 +201,7 @@ export default function KirimArtikelPage() {
                         )} />
                         <FormField control={form.control} name="file" render={({ field }) => (
                             <FormItem>
-                            <FormLabel>Unggah Naskah Lengkap (wajib)</FormLabel>
+                            <FormLabel>{t('upload_label')}</FormLabel>
                             <FormControl>
                                 <Input 
                                     type="file" 
@@ -215,12 +217,12 @@ export default function KirimArtikelPage() {
                         {isSubmitting ? (
                             <>
                                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                Mengirim Naskah...
+                                {t('submitting_button')}
                             </>
                         ) : (
                             <>
                                 <Send className="mr-2 h-4 w-4" />
-                                Kirim Naskah Saya
+                                {t('submit_button')}
                             </>
                         )}
                         </Button>

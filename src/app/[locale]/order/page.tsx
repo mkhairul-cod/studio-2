@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -67,6 +68,7 @@ const serviceOptions = [
 ];
 
 export default function OrderPage() {
+  const t = useTranslations('OrderPage');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
@@ -129,11 +131,11 @@ export default function OrderPage() {
                     <div className="mx-auto bg-green-100 p-4 rounded-full w-fit">
                         <CheckCircle className="w-12 h-12 text-green-600" />
                     </div>
-                    <CardTitle className="font-headline text-3xl text-primary mt-4">Pesanan Berhasil Dikirim!</CardTitle>
+                    <CardTitle className="font-headline text-3xl text-primary mt-4">{t('success_title')}</CardHeader>
                 </CardHeader>
                 <CardContent>
-                    <p className="text-muted-foreground">Terima kasih telah melakukan pemesanan. Tim kami akan segera menghubungi Anda melalui WhatsApp untuk konfirmasi dan diskusi lebih lanjut mengenai detail dan harga.</p>
-                    <p className="text-muted-foreground mt-2">Mohon periksa juga folder spam email Anda untuk salinan pesanan.</p>
+                    <p className="text-muted-foreground">{t('success_description')}</p>
+                    <p className="text-muted-foreground mt-2">{t('success_spam')}</p>
                 </CardContent>
             </Card>
         </div>
@@ -145,49 +147,49 @@ export default function OrderPage() {
       <div className="container mx-auto px-4 py-16 md:py-24">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-headline font-bold text-primary">
-            Formulir Pemesanan Layanan
+            {t('title')}
           </h1>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto mt-4">
-            Lengkapi formulir di bawah ini untuk memulai proyek Anda. Tim kami akan menghubungi Anda untuk konsultasi harga dan detail.
+            {t('description')}
           </p>
         </div>
 
         <Card className="w-full max-w-2xl mx-auto">
           <CardHeader>
-              <CardTitle className="font-headline">Detail Pesanan Anda</CardTitle>
-              <CardDescription>Isi semua kolom yang diperlukan untuk melanjutkan.</CardDescription>
+              <CardTitle className="font-headline">{t('card_title')}</CardTitle>
+              <CardDescription>{t('card_description')}</CardDescription>
           </CardHeader>
           <CardContent>
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 <FormField control={form.control} name="name" render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Nama Lengkap</FormLabel>
-                    <FormControl><Input placeholder="Contoh: Budi Santoso" {...field} /></FormControl>
+                    <FormLabel>{t('name_label')}</FormLabel>
+                    <FormControl><Input placeholder={t('name_placeholder')} {...field} /></FormControl>
                     <FormMessage />
                   </FormItem>
                 )} />
                 <FormField control={form.control} name="whatsapp" render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Nomor WhatsApp Aktif</FormLabel>
-                    <FormControl><Input placeholder="Contoh: 081234567890" {...field} /></FormControl>
+                    <FormLabel>{t('whatsapp_label')}</FormLabel>
+                    <FormControl><Input placeholder={t('whatsapp_placeholder')} {...field} /></FormControl>
                     <FormMessage />
                   </FormItem>
                 )} />
                 <FormField control={form.control} name="email" render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Alamat Email</FormLabel>
-                    <FormControl><Input placeholder="Contoh: budi.santoso@email.com" {...field} /></FormControl>
+                    <FormLabel>{t('email_label')}</FormLabel>
+                    <FormControl><Input placeholder={t('email_placeholder')} {...field} /></FormControl>
                     <FormMessage />
                   </FormItem>
                 )} />
                  <FormField control={form.control} name="serviceType" render={({ field }) => (
                     <FormItem>
-                        <FormLabel>Jenis Layanan</FormLabel>
+                        <FormLabel>{t('service_label')}</FormLabel>
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                             <SelectTrigger>
-                            <SelectValue placeholder="Pilih layanan yang Anda butuhkan" />
+                            <SelectValue placeholder={t('service_placeholder')} />
                             </SelectTrigger>
                         </FormControl>
                         <SelectContent>
@@ -206,10 +208,10 @@ export default function OrderPage() {
                   name="message"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Pesan / Deskripsi Kebutuhan (Opsional)</FormLabel>
+                      <FormLabel>{t('message_label')}</FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder="Jelaskan kebutuhan Anda secara singkat..."
+                          placeholder={t('message_placeholder')}
                           rows={4}
                           {...field}
                         />
@@ -220,7 +222,7 @@ export default function OrderPage() {
                 />
                 <FormField control={form.control} name="file" render={({ field }) => (
                     <FormItem>
-                    <FormLabel>Unggah File (Opsional, maks 10MB)</FormLabel>
+                    <FormLabel>{t('upload_label')}</FormLabel>
                     <FormControl>
                         <Input 
                             type="file" 
@@ -232,16 +234,16 @@ export default function OrderPage() {
                     </FormItem>
                 )} />
 
-                <p className="text-sm text-muted-foreground pt-4 text-center">Dengan menekan tombol "Kirim Pesanan", Anda mengajukan permintaan penawaran dan setuju untuk dihubungi oleh tim kami.</p>
+                <p className="text-sm text-muted-foreground pt-4 text-center">{t('terms')}</p>
 
                 <Button type="submit" className="w-full" disabled={isSubmitting}>
                   {isSubmitting ? (
                       <>
                           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          Mengirim...
+                          {t('submitting_button')}
                       </>
                   ) : (
-                      'Kirim Pesanan'
+                      t('submit_button')
                   )}
                 </Button>
               </form>

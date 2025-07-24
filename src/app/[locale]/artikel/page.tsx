@@ -3,10 +3,11 @@
 import { useState } from 'react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+import Link from 'next-intl/link';
 import Image from 'next/image';
-import { ArrowRight, Calendar, Tag, Sparkles, Filter, Send } from 'lucide-react';
+import { ArrowRight, Calendar, Sparkles, Filter, Send } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useTranslations } from 'next-intl';
 
 const allArticles = [
   {
@@ -91,9 +92,23 @@ const allArticles = [
   },
 ];
 
-const categories = ['Semua', 'Teknologi AI', 'Pendidikan Masa Depan', 'Publikasi Ilmiah', 'Tips Menulis', 'Dunia Kampus', 'Riset & Data'];
+const categoryKeys = ['filter_all', 'filter_ai', 'filter_future_edu', 'filter_publishing', 'filter_writing_tips', 'filter_campus_life', 'filter_research_data'];
+
+// This mapping is needed because the categories in the article data are in Indonesian.
+// In a real application, you'd likely have category IDs or store the articles with category keys.
+const categoryKeyToId: { [key: string]: string } = {
+  filter_all: 'Semua',
+  filter_ai: 'Teknologi AI',
+  filter_future_edu: 'Pendidikan Masa Depan',
+  filter_publishing: 'Publikasi Ilmiah',
+  filter_writing_tips: 'Tips Menulis',
+  filter_campus_life: 'Dunia Kampus',
+  filter_research_data: 'Riset & Data',
+};
+
 
 export default function ArtikelPage() {
+  const t = useTranslations('ArticlesPage');
   const [activeCategory, setActiveCategory] = useState('Semua');
 
   const filteredArticles = activeCategory === 'Semua'
@@ -105,26 +120,29 @@ export default function ArtikelPage() {
       <div className="container mx-auto px-4 py-16 md:py-24">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-headline font-bold text-primary">
-            Wawasan & Tren Akademik Terbaru
+            {t('title')}
           </h1>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto mt-4">
-            Jelajahi analisis mendalam, tips praktis, dan berita terkini seputar dunia publikasi, penelitian, dan teknologi pendidikan dari para ahli di Simpul Academy.
+            {t('description')}
           </p>
         </div>
 
         {/* Category Filters */}
         <div className="flex flex-wrap items-center justify-center gap-2 md:gap-4 mb-12">
            <Filter className="w-5 h-5 text-muted-foreground hidden sm:block" />
-           {categories.map(category => (
-            <Button
-              key={category}
-              variant={activeCategory === category ? 'default' : 'outline'}
-              onClick={() => setActiveCategory(category)}
-              className={cn("rounded-full px-6 transition-all duration-300", activeCategory === category ? "bg-accent text-accent-foreground shadow-md scale-105" : "bg-background/80 hover:bg-background")}
-            >
-              {category}
-            </Button>
-          ))}
+           {categoryKeys.map(key => {
+             const categoryName = categoryKeyToId[key];
+             return (
+              <Button
+                key={key}
+                variant={activeCategory === categoryName ? 'default' : 'outline'}
+                onClick={() => setActiveCategory(categoryName)}
+                className={cn("rounded-full px-6 transition-all duration-300", activeCategory === categoryName ? "bg-accent text-accent-foreground shadow-md scale-105" : "bg-background/80 hover:bg-background")}
+              >
+                {t(key as any)}
+              </Button>
+            )}
+           )}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -170,7 +188,7 @@ export default function ArtikelPage() {
               <CardFooter>
                  <Button asChild variant="link" className="p-0 h-auto font-semibold text-primary">
                     <Link href={article.link}>
-                        Baca Selengkapnya <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                        {t('read_more')} <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                     </Link>
                  </Button>
               </CardFooter>
@@ -180,23 +198,23 @@ export default function ArtikelPage() {
         
         {filteredArticles.length === 0 && (
           <div className="text-center mt-16 col-span-full bg-background/80 p-8 rounded-lg shadow-sm">
-            <h3 className="font-headline text-2xl text-primary">Segera Hadir!</h3>
+            <h3 className="font-headline text-2xl text-primary">{t('coming_soon_title')}</h3>
             <p className="text-muted-foreground text-lg mt-2">
-              Belum ada artikel untuk kategori "{activeCategory}". Kami sedang menyiapkannya!
+              {t('coming_soon_description', {category: activeCategory})}
             </p>
           </div>
         )}
 
         {/* Call to Action Section */}
         <section className="mt-16 md:mt-24 text-center bg-card p-8 md:p-12 rounded-lg shadow-lg border">
-          <h2 className="text-3xl font-headline font-bold text-primary">Punya Tulisan Menarik?</h2>
+          <h2 className="text-3xl font-headline font-bold text-primary">{t('cta_title')}</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto mt-3 mb-6">
-            Kami membuka kesempatan bagi Anda untuk berbagi wawasan dan menjadi kontributor di Simpul Academy. Kirimkan tulisan Anda dan jangkau ribuan pembaca.
+            {t('cta_description')}
           </p>
           <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
             <Link href="/kirim-artikel">
               <Send className="mr-2 h-5 w-5"/>
-              Kirim Tulisan Anda
+              {t('cta_button')}
             </Link>
           </Button>
         </section>

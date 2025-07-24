@@ -21,10 +21,10 @@ import {
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+import Link from 'next-intl/link';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
-
+import { useTranslations } from 'next-intl';
 
 const services = [
   {
@@ -120,15 +120,17 @@ const galleryImages = [
 ];
 
 export default function LayananPage() {
+  const t = useTranslations('ServicesPage');
+
   return (
     <div className="bg-background">
       <div className="container mx-auto px-4 py-16 md:py-24">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-headline font-bold text-primary">
-            Layanan Akademik & Digital Kami
+            {t('title')}
           </h1>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto mt-4">
-            Solusi terintegrasi untuk mendukung kesuksesan publikasi ilmiah dan transformasi digital Anda.
+            {t('description')}
           </p>
         </div>
 
@@ -144,7 +146,7 @@ export default function LayananPage() {
               <CardContent className="flex flex-col flex-grow pt-0">
                 <p className="text-muted-foreground text-sm flex-grow mb-4">{service.description}</p>
                 <Button asChild size="sm" className={cn("w-full mt-auto", service.isFeatured ? "bg-primary text-primary-foreground hover:bg-primary/90" : "bg-accent hover:bg-accent/90 text-accent-foreground")}>
-                    <Link href="/order">Pesan Layanan</Link>
+                    <Link href="/order">{t('order_service')}</Link>
                 </Button>
               </CardContent>
             </Card>
@@ -155,10 +157,10 @@ export default function LayananPage() {
         <section id="gallery" className="pt-16 md:pt-24">
            <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-headline font-bold text-primary">
-                Galeri & Portofolio
+                {t('gallery_title')}
               </h2>
               <p className="text-lg text-muted-foreground max-w-3xl mx-auto mt-4">
-                Beberapa contoh hasil kerja dan bukti kepercayaan dari klien kami.
+                {t('gallery_description')}
               </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

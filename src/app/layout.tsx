@@ -1,13 +1,10 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import { Toaster } from '@/components/ui/toaster';
-import FloatingWhatsApp from '@/components/FloatingWhatsApp';
 
 export const metadata: Metadata = {
   title: 'Simpul Academy Web',
-  description:
+  description':
     'Jasa Konversi Skripsi ke Jurnal, Proofreading, dan Pelatihan Penulisan Akademik',
 };
 
@@ -24,10 +21,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased">
-        <Header />
-        <main className="flex-grow">{children}</main>
-        <Footer />
-        <FloatingWhatsApp />
+        {children}
         <Toaster />
       </body>
     </html>

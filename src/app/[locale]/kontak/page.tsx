@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -35,6 +36,7 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 export default function KontakPage() {
+  const t = useTranslations('ContactPage');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
@@ -84,12 +86,12 @@ export default function KontakPage() {
               <MailCheck className="h-12 w-12 text-green-600" />
             </div>
             <CardTitle className="font-headline text-3xl text-primary mt-4">
-              Pesan Terkirim!
+              {t('success_title')}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground">
-              Terima kasih telah menghubungi kami. Kami akan segera merespons pesan Anda.
+              {t('success_description')}
             </p>
           </CardContent>
         </Card>
@@ -102,19 +104,18 @@ export default function KontakPage() {
       <div className="container mx-auto px-4 py-16 md:py-24">
         <div className="mb-12 text-center">
           <h1 className="text-4xl font-bold text-primary md:text-5xl font-headline">
-            Hubungi Kami
+            {t('title')}
           </h1>
           <p className="mx-auto mt-4 max-w-3xl text-lg text-muted-foreground">
-            Punya pertanyaan atau ingin berdiskusi? Kami siap membantu.
-            Isi formulir di bawah ini dan tim kami akan segera menghubungi Anda.
+            {t('description')}
           </p>
         </div>
 
         <Card className="mx-auto w-full max-w-2xl">
           <CardHeader>
-            <CardTitle className="font-headline">Formulir Kontak</CardTitle>
+            <CardTitle className="font-headline">{t('form_title')}</CardTitle>
             <CardDescription>
-              Mohon isi semua kolom yang tersedia.
+              {t('form_description')}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -125,9 +126,9 @@ export default function KontakPage() {
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Nama Lengkap</FormLabel>
+                      <FormLabel>{t('name_label')}</FormLabel>
                       <FormControl>
-                        <Input placeholder="Nama Anda" {...field} />
+                        <Input placeholder={t('name_placeholder')} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -138,9 +139,9 @@ export default function KontakPage() {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Alamat Email</FormLabel>
+                      <FormLabel>{t('email_label')}</FormLabel>
                       <FormControl>
-                        <Input placeholder="email@anda.com" {...field} />
+                        <Input placeholder={t('email_placeholder')} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -151,10 +152,10 @@ export default function KontakPage() {
                   name="message"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Pesan Anda</FormLabel>
+                      <FormLabel>{t('message_label')}</FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder="Tuliskan pesan Anda di sini..."
+                          placeholder={t('message_placeholder')}
                           rows={6}
                           {...field}
                         />
@@ -167,10 +168,10 @@ export default function KontakPage() {
                   {isSubmitting ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Mengirim...
+                      {t('submitting_button')}
                     </>
                   ) : (
-                    'Kirim Pesan'
+                    t('submit_button')
                   )}
                 </Button>
               </form>
