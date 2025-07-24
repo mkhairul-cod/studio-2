@@ -5,7 +5,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, Calendar, Tag, Sparkles, Filter } from 'lucide-react';
+import { ArrowRight, Calendar, Tag, Sparkles, Filter, Send } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const allArticles = [
@@ -186,6 +186,20 @@ export default function ArtikelPage() {
             </p>
           </div>
         )}
+
+        {/* Call to Action Section */}
+        <section className="mt-16 md:mt-24 text-center bg-card p-8 md:p-12 rounded-lg shadow-lg border">
+          <h2 className="text-3xl font-headline font-bold text-primary">Punya Tulisan Menarik?</h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto mt-3 mb-6">
+            Kami membuka kesempatan bagi Anda untuk berbagi wawasan dan menjadi kontributor di Simpul Academy. Kirimkan tulisan Anda dan jangkau ribuan pembaca.
+          </p>
+          <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
+            <Link href="/kirim-artikel">
+              <Send className="mr-2 h-5 w-5"/>
+              Kirim Tulisan Anda
+            </Link>
+          </Button>
+        </section>
 
       </div>
     </div>

@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { Menu, University, Wand2 } from 'lucide-react';
+import { Menu, University, Wand2, Send } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -12,7 +12,7 @@ import { cn } from '@/lib/utils';
 const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/layanan', label: 'Layanan' },
-  { href: '/artikel', label: 'Artikel', isNew: true },
+  { href: '/artikel', label: 'Artikel' },
   { href: '/alat-ai', label: 'Alat AI', isNew: true },
   { href: '/tentang-kami', label: 'Tentang Kami' },
   { href: '/mitra', label: 'Mitra' },
@@ -53,6 +53,9 @@ export default function Header() {
         </nav>
 
         <div className="hidden md:flex items-center gap-2">
+           <Button asChild variant="outline" size="sm">
+            <Link href="/kirim-artikel"><Send className="w-4 h-4 mr-2" /> Kirim Tulisan</Link>
+          </Button>
           <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground">
             <Link href="/order">Order Sekarang</Link>
           </Button>
@@ -94,6 +97,9 @@ export default function Header() {
                 </nav>
                  <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground mt-4" onClick={() => setIsMenuOpen(false)}>
                   <Link href="/order">Order Sekarang</Link>
+                </Button>
+                 <Button asChild variant="outline" className="mt-2" onClick={() => setIsMenuOpen(false)}>
+                  <Link href="/kirim-artikel"><Send className="w-4 h-4 mr-2" /> Kirim Tulisan</Link>
                 </Button>
               </div>
             </SheetContent>
