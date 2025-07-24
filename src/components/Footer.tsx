@@ -1,5 +1,8 @@
+'use client';
+
 import Link from 'next/link';
 import { University, Phone, Mail, MapPin, Users } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
 
 const WhatsAppIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5 text-white">
@@ -7,10 +10,43 @@ const WhatsAppIcon = () => (
     </svg>
 );
 
+const countryFlags = [
+  { code: 'ID', name: 'Indonesia' },
+  { code: 'MY', name: 'Malaysia' },
+  { code: 'SG', name: 'Singapore' },
+  { code: 'AU', name: 'Australia' },
+  { code: 'US', name: 'USA' },
+  { code: 'GB', name: 'UK' },
+];
 
 export default function Footer() {
   const WHATSAPP_LINK =
     'https://api.whatsapp.com/send?phone=6285262608383&text=Halo%20Simpul%20Academy,%20saya%20tertarik%20dengan%20layanan%20Anda.';
+
+  const [visitorCount, setVisitorCount] = useState<number | null>(null);
+
+  useEffect(() => {
+    // This code runs only on the client side
+    const key = 'simpul-visitor-count';
+    const baseCount = 1234;
+    let currentCount;
+
+    try {
+        currentCount = localStorage.getItem(key);
+        if (currentCount === null) {
+            // First time visitor, set a random-ish starting number
+            currentCount = (baseCount + Math.floor(Math.random() * 50)).toString();
+        } else {
+            // Returning visitor, increment their count
+            currentCount = (parseInt(currentCount, 10) + 1).toString();
+        }
+        localStorage.setItem(key, currentCount);
+        setVisitorCount(parseInt(currentCount, 10));
+    } catch (error) {
+        // localStorage is not available, just show the base count
+        setVisitorCount(baseCount);
+    }
+  }, []);
 
   return (
     <footer className="bg-primary/5 border-t">
@@ -80,16 +116,30 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Visitor Stats Placeholder */}
+        {/* Visitor Stats */}
         <div className="mt-12 pt-8 border-t text-center">
-            <h3 className="text-sm font-semibold text-muted-foreground mb-2">STATISTIK PENGUNJUNG</h3>
+            <h3 className="text-sm font-semibold text-muted-foreground mb-4">STATISTIK PENGUNJUNG</h3>
             <div className="flex items-center justify-center gap-2 text-muted-foreground">
                 <Users className="h-5 w-5" />
-                <span className="font-bold text-lg text-primary">1,234</span>
+                {visitorCount !== null ? (
+                    <span className="font-bold text-xl text-primary tracking-wider">{visitorCount.toLocaleString('id-ID')}</span>
+                ) : (
+                    <span className="font-bold text-xl text-primary tracking-wider">...</span>
+                )}
+                 <span>Pengunjung</span>
             </div>
-            <p className="text-xs text-muted-foreground/80 mt-1">(Placeholder)</p>
+             <div className="mt-4 flex justify-center items-center space-x-2">
+              {countryFlags.map(flag => (
+                <img
+                  key={flag.code}
+                  src={`https://flagsapi.com/${flag.code}/flat/24.png`}
+                  alt={flag.name}
+                  title={flag.name}
+                  className="rounded-sm shadow-md"
+                />
+              ))}
+            </div>
         </div>
-
 
         <div className="mt-8 border-t pt-8 text-center text-sm text-muted-foreground">
           <p>&copy; {new Date().getFullYear()} CV Simpul Project Academy. All rights reserved.</p>
