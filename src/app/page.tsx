@@ -13,9 +13,13 @@ import {
   Users,
   Briefcase,
   Award,
+  PenSquare,
+  Lightbulb,
+  BookOpen,
 } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import Autoplay from "embla-carousel-autoplay"
+import { motion } from 'framer-motion';
 
 
 import { Button } from '@/components/ui/button';
@@ -153,7 +157,12 @@ const slides = [
             { text: "Mulai Proyek Anda", href: "/order", variant: "accent" },
             { text: "Konsultasi Gratis", href: "/kontak", variant: "outline", icon: MessageCircle }
         ],
-        image: { src: "https://placehold.co/1200x800.png", dataAiHint: "researcher presentation" }
+        image: { src: "https://placehold.co/1200x800.png", dataAiHint: "researcher presentation" },
+        floatingIcons: [
+            { icon: PenSquare, className: "top-[15%] left-[10%]" },
+            { icon: BookOpen, className: "bottom-[15%] right-[10%]" },
+            { icon: Lightbulb, className: "top-[20%] right-[20%]" },
+        ]
     },
     {
         title: "Bangun Peluang & Jadi Mitra Kami",
@@ -162,7 +171,12 @@ const slides = [
             { text: "Jadi Mitra Kami", href: "/mitra#join-mitra", variant: "accent", icon: Users },
             { text: "Lihat Layanan", href: "/layanan", variant: "outline", icon: Briefcase }
         ],
-        image: { src: "https://placehold.co/1200x800.png", dataAiHint: "team collaboration" }
+        image: { src: "https://placehold.co/1200x800.png", dataAiHint: "team collaboration" },
+        floatingIcons: [
+            { icon: Users, className: "bottom-[25%] left-[12%]" },
+            { icon: Briefcase, className: "top-[18%] right-[15%]" },
+            { icon: Award, className: "bottom-[10%] right-[30%]" },
+        ]
     },
     {
         title: "Asah Kemampuan, Cari Solusi",
@@ -171,7 +185,12 @@ const slides = [
             { text: "Lihat Pelatihan", href: "/layanan", variant: "accent", icon: Presentation },
             { text: "Hubungi Kami", href: "/kontak", variant: "outline", icon: MessageCircle }
         ],
-        image: { src: "https://placehold.co/1200x800.png", dataAiHint: "online workshop" }
+        image: { src: "https://placehold.co/1200x800.png", dataAiHint: "online workshop" },
+        floatingIcons: [
+            { icon: Presentation, className: "top-[20%] left-[15%]" },
+            { icon: Lightbulb, className: "bottom-[20%] right-[15%]" },
+            { icon: PenSquare, className: "top-[40%] right-[10%]" },
+        ]
     }
 ];
 
@@ -201,6 +220,30 @@ const SpecialOfferDialog = ({ open, onOpenChange }: { open: boolean, onOpenChang
       </DialogContent>
     </Dialog>
   );
+};
+
+const FloatingIcon = ({ icon: Icon, className }: { icon: React.ElementType, className: string }) => {
+    const duration = Math.random() * 2 + 3; // Random duration between 3 and 5 seconds
+    const delay = Math.random() * 2; // Random delay up to 2 seconds
+
+    return (
+        <motion.div
+            className={`absolute text-primary/30 z-0 hidden md:block ${className}`}
+            animate={{
+                y: ["-8px", "8px"],
+                rotate: [0, Math.random() * 10 - 5],
+            }}
+            transition={{
+                duration,
+                repeat: Infinity,
+                repeatType: "reverse",
+                ease: "easeInOut",
+                delay
+            }}
+        >
+            <Icon className="w-12 h-12 lg:w-16 lg:h-16" />
+        </motion.div>
+    );
 };
 
 
@@ -243,12 +286,15 @@ export default function Home() {
               {slides.map((slide, index) => (
                 <CarouselItem key={index}>
                     <div className="relative w-full h-[80vh] md:h-[70vh]">
+                        {slide.floatingIcons.map((item, idx) => (
+                           <FloatingIcon key={idx} icon={item.icon} className={item.className} />
+                        ))}
                         <Image
                             src={slide.image.src}
                             alt={slide.title}
                             layout="fill"
                             objectFit="cover"
-                            className="opacity-20"
+                            className="opacity-10"
                             data-ai-hint={slide.image.dataAiHint}
                         />
                          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
