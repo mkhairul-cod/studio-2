@@ -9,16 +9,16 @@ import {
   Presentation,
   Star,
   ArrowRight,
-  MessageCircle,
+  Loader2,
   Users,
   Briefcase,
   Award,
   PenSquare,
   Lightbulb,
   BookOpen,
+  Wand2,
 } from 'lucide-react';
 import React, { useState, useEffect, useRef } from 'react';
-import Autoplay from "embla-carousel-autoplay"
 import { motion, useInView } from 'framer-motion';
 
 import { Button } from '@/components/ui/button';
@@ -45,6 +45,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { Textarea } from '@/components/ui/textarea';
+import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
+import { generateTitles } from '@/ai/flows/title-generator';
+
 
 const services = [
   {
@@ -213,55 +217,11 @@ const AnimateOnScroll = ({ children, className }: { children: React.ReactNode, c
 
 
 export default function Home() {
-  const slides = [
-    {
-        title: "Wujudkan Publikasi Ilmiah Anda",
-        description: "Simpul Academy menyediakan layanan akademik profesional untuk membantu peneliti, dosen, dan mahasiswa dalam mencapai target publikasi.",
-        buttons: [
-            { text: "Mulai Proyek Anda", href: "/order", variant: "accent" },
-            { text: "Konsultasi Gratis", href: "/kontak", variant: "outline", icon: MessageCircle }
-        ],
-        image: { src: "https://placehold.co/1200x800.png", dataAiHint: "researcher presentation" },
-        floatingIcons: [
-            { icon: PenSquare, className: "top-[15%] left-[10%]" },
-            { icon: BookOpen, className: "bottom-[15%] right-[10%]" },
-            { icon: Lightbulb, className: "top-[20%] right-[20%]" },
-        ]
-    },
-    {
-        title: "Bangun Peluang & Jadi Mitra Kami",
-        description: "Buka peluang penghasilan tambahan dan perluas jaringan Anda dengan menjadi mitra Simpul Academy. Mari tumbuh dan berkolaborasi bersama kami.",
-        buttons: [
-            { text: "Jadi Mitra Kami", href: "/mitra#join-mitra", variant: "accent", icon: Users },
-            { text: "Lihat Layanan", href: "/layanan", variant: "outline", icon: Briefcase }
-        ],
-        image: { src: "https://placehold.co/1200x800.png", dataAiHint: "team collaboration" },
-        floatingIcons: [
-            { icon: Users, className: "bottom-[25%] left-[12%]" },
-            { icon: Briefcase, className: "top-[18%] right-[15%]" },
-            { icon: Award, className: "bottom-[10%] right-[30%]" },
-        ]
-    },
-    {
-        title: "Asah Kemampuan, Cari Solusi",
-        description: "Ayo tingkatkan skill menulis, meneliti, menganalisis masalah, dan berbagi ide untuk mencari solusi bersama melalui program pelatihan kami.",
-        buttons: [
-            { text: "Lihat Pelatihan", href: "/layanan", variant: "accent", icon: Presentation },
-            { text: "Hubungi Kami", href: "/kontak", variant: "outline", icon: MessageCircle }
-        ],
-        image: { src: "https://placehold.co/1200x800.png", dataAiHint: "online workshop" },
-        floatingIcons: [
-            { icon: Presentation, className: "top-[20%] left-[15%]" },
-            { icon: Lightbulb, className: "bottom-[20%] right-[15%]" },
-            { icon: PenSquare, className: "top-[40%] right-[10%]" },
-        ]
-    }
-  ];
-
-  const plugin = React.useRef(
-    Autoplay({ delay: 5000, stopOnInteraction: true })
-  )
   const [isSpecialOfferOpen, setSpecialOfferOpen] = useState(false);
+  const [topic, setTopic] = useState('');
+  const [generatedTitles, setGeneratedTitles] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const hasSeenOffer = sessionStorage.getItem('hasSeenLpdpOffer');
@@ -274,63 +234,103 @@ export default function Home() {
     }
   }, []);
 
+  const handleGenerate = async () => {
+    if (!topic.trim()) {
+      setError('Mohon masukkan deskripsi topik penelitian Anda.');
+      return;
+    }
+    setIsLoading(true);
+    setError(null);
+    setGeneratedTitles([]);
+
+    try {
+      const result = await generateTitles({ researchTopic: topic });
+      setGeneratedTitles(result.titles);
+    } catch (e) {
+      console.error(e);
+      setError('Terjadi kesalahan saat menghasilkan judul. Silakan coba lagi.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
 
   return (
     <>
         <SpecialOfferDialog open={isSpecialOfferOpen} onOpenChange={setSpecialOfferOpen} />
         {/* Hero Section */}
-        <section
-          id="hero"
-          className="relative bg-primary/5 w-full overflow-hidden"
-        >
-          <Carousel
-            plugins={[plugin.current]}
-            opts={{ loop: true }}
-            className="w-full"
-            onMouseEnter={plugin.current.stop}
-            onMouseLeave={plugin.current.reset}
-          >
-            <CarouselContent>
-              {slides.map((slide, index) => (
-                <CarouselItem key={index}>
-                    <div className="relative w-full h-[80vh] md:h-[70vh]">
-                        {slide.floatingIcons.map((item, idx) => (
-                           <FloatingIcon key={idx} icon={item.icon} className={item.className} />
-                        ))}
-                        <Image
-                            src={slide.image.src}
-                            alt={slide.title}
-                            fill
-                            style={{objectFit: 'cover'}}
-                            className="opacity-10"
-                            data-ai-hint={slide.image.dataAiHint}
-                        />
-                         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
-                        <div className="container mx-auto px-4 h-full flex flex-col justify-center text-center relative z-10">
-                            <h1 className="text-4xl md:text-6xl font-headline font-bold text-primary mb-4">
-                                {slide.title}
-                            </h1>
-                            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-                                {slide.description}
-                            </p>
-                            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                                {slide.buttons.map((button, btnIndex) => (
-                                     <Button key={btnIndex} asChild size="lg" className={button.variant === 'accent' ? 'bg-accent hover:bg-accent/90 text-accent-foreground' : 'border-primary/30' } variant={button.variant === 'accent' ? 'default' : 'outline'}>
-                                        <Link href={button.href}>
-                                            {button.icon && <button.icon className="mr-2 h-5 w-5"/>}
-                                            {button.text}
-                                        </Link>
-                                    </Button>
-                                ))}
-                            </div>
+        <section id="hero" className="relative bg-primary/5 w-full overflow-hidden">
+          <div className="relative w-full min-h-[70vh] flex items-center justify-center py-20">
+              <FloatingIcon icon={PenSquare} className="top-[15%] left-[10%]" />
+              <FloatingIcon icon={BookOpen} className="bottom-[15%] right-[10%]" />
+              <FloatingIcon icon={Lightbulb} className="top-[20%] right-[20%]" />
+              <Image
+                  src="https://placehold.co/1200x800.png"
+                  alt="Abstract background"
+                  fill
+                  style={{objectFit: 'cover'}}
+                  className="opacity-10"
+                  data-ai-hint="researcher presentation"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+
+              <div className="container mx-auto px-4 text-center relative z-10">
+                  <h1 className="text-4xl md:text-6xl font-headline font-bold text-primary mb-4">
+                      Butuh Inspirasi Judul Penelitian?
+                  </h1>
+                  <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
+                      Cukup masukkan topik Anda, dan biarkan kecerdasan buatan kami memberikan ide-ide judul yang cemerlang untuk memulai penelitian Anda.
+                  </p>
+                  
+                  <Card className="max-w-2xl mx-auto shadow-xl bg-card/80 backdrop-blur-sm">
+                    <CardContent className="p-6">
+                        <div className="space-y-4">
+                            <Textarea
+                                placeholder="Contoh: Pengaruh media sosial terhadap kesehatan mental remaja..."
+                                rows={3}
+                                value={topic}
+                                onChange={(e) => setTopic(e.target.value)}
+                                disabled={isLoading}
+                                className="text-base"
+                            />
+                            <Button onClick={handleGenerate} disabled={isLoading} className="w-full" size="lg">
+                                {isLoading ? (
+                                    <>
+                                        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                                        Mencari Ide...
+                                    </>
+                                ) : (
+                                   <>
+                                      <Wand2 className="mr-2 h-5 w-5" />
+                                      Dapatkan Ide Judul
+                                   </>
+                                )}
+                            </Button>
                         </div>
-                    </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 hidden md:flex" />
-            <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 hidden md:flex" />
-          </Carousel>
+                    </CardContent>
+                  </Card>
+
+                   {error && (
+                      <Alert variant="destructive" className="max-w-2xl mx-auto mt-4 text-left">
+                          <AlertTitle>Error</AlertTitle>
+                          <AlertDescription>{error}</AlertDescription>
+                      </Alert>
+                  )}
+
+                  {generatedTitles.length > 0 && (
+                      <div className="mt-8 max-w-2xl mx-auto text-left">
+                          <h3 className="text-xl font-headline font-bold text-primary mb-4">Berikut beberapa idenya:</h3>
+                          <ul className="space-y-3 list-decimal list-inside bg-background/80 backdrop-blur-sm p-4 rounded-md border">
+                              {generatedTitles.map((title, index) => (
+                                  <li key={index} className="text-muted-foreground">
+                                      {title}
+                                  </li>
+                              ))}
+                          </ul>
+                      </div>
+                  )}
+              </div>
+          </div>
         </section>
 
         {/* Scrolling Ticker Section */}
