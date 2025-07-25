@@ -1,12 +1,10 @@
-// This file is required for `next-intl` to work.
-
 "use client";
 
 import Error from "next/error";
 
 export default function NotFound() {
   return (
-    <html lang="en">
+    <html lang="id">
       <body>
         <Error statusCode={404} />
       </body>
