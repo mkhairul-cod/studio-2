@@ -317,7 +317,7 @@ export default function Home() {
         </section>
 
         {/* Scrolling Ticker Section */}
-        <section className="bg-primary text-primary-foreground py-5 overflow-hidden relative">
+        <section className="bg-primary text-primary-foreground py-5 overflow-hidden relative mt-16">
             <div className="relative">
                 <div className="flex whitespace-nowrap animate-scroll">
                     <div className="flex-shrink-0 px-8 text-lg font-bold"><TickerText /></div>
