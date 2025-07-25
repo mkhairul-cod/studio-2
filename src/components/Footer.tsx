@@ -1,9 +1,8 @@
 'use client';
 
-import { Link } from 'next-intl/navigation';
+import Link from 'next/link';
 import { University, Phone, Mail, MapPin, Users } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
-import { useTranslations } from 'next-intl';
 
 const WhatsAppIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5 text-white">
@@ -21,8 +20,6 @@ const countryFlags = [
 ];
 
 export default function Footer() {
-  const t = useTranslations('Footer');
-  const h = useTranslations('Header');
   const WHATSAPP_LINK =
     'https://api.whatsapp.com/send?phone=6285262608383&text=Halo%20Simpul%20Academy,%20saya%20tertarik%20dengan%20layanan%20Anda.';
 
@@ -52,12 +49,12 @@ export default function Footer() {
   }, []);
 
   const navLinks = [
-    { href: '/layanan', label: h('services') },
-    { href: '/artikel', label: h('articles') },
-    { href: '/tentang-kami', label: h('about_us') },
-    { href: '/mitra', label: h('partners') },
-    { href: '/kontak', label: h('contact') },
-    { href: '/order', label: h('order_now') },
+    { href: '/layanan', label: 'Layanan' },
+    { href: '/artikel', label: 'Artikel' },
+    { href: '/tentang-kami', label: 'Tentang Kami' },
+    { href: '/mitra', label: 'Mitra' },
+    { href: '/kontak', label: 'Kontak' },
+    { href: '/order', label: 'Order Sekarang' },
   ];
 
   return (
@@ -71,13 +68,13 @@ export default function Footer() {
               <span className="font-headline">Simpul Academy</span>
             </Link>
             <p className="text-muted-foreground text-sm">
-              {t('tagline')}
+              Membantu akademisi Indonesia mencapai potensi penuh dalam publikasi ilmiah.
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-headline font-bold text-primary mb-4">{t('quick_links')}</h3>
+            <h3 className="font-headline font-bold text-primary mb-4">Tautan Cepat</h3>
             <ul className="space-y-2">
               {navLinks.map(link => (
                  <li key={link.href}><Link href={link.href} className="text-sm text-muted-foreground hover:text-primary transition-colors">{link.label}</Link></li>
@@ -87,7 +84,7 @@ export default function Footer() {
 
           {/* Contact Info */}
           <div>
-            <h3 className="font-headline font-bold text-primary mb-4">{t('contact_us')}</h3>
+            <h3 className="font-headline font-bold text-primary mb-4">Hubungi Kami</h3>
             <ul className="space-y-3 text-sm">
               <li className="flex items-center gap-3">
                 <Mail className="h-4 w-4 text-primary" />
@@ -106,7 +103,7 @@ export default function Footer() {
 
           {/* Legal & Social */}
           <div>
-            <h3 className="font-headline font-bold text-primary mb-4">{t('legality')}</h3>
+            <h3 className="font-headline font-bold text-primary mb-4">Legalitas</h3>
             <p className="text-sm text-muted-foreground">
               CV Simpul Project Academy
             </p>
@@ -120,14 +117,14 @@ export default function Footer() {
                 className="mt-4 inline-flex items-center gap-2 rounded-md bg-green-500 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
             >
                 <WhatsAppIcon />
-                {t('chat_whatsapp')}
+                Chat via WhatsApp
             </a>
           </div>
         </div>
 
         {/* Visitor Stats */}
         <div className="mt-12 pt-8 border-t text-center">
-            <h3 className="text-sm font-semibold text-muted-foreground mb-4">{t('visitor_stats')}</h3>
+            <h3 className="text-sm font-semibold text-muted-foreground mb-4">STATISTIK PENGUNJUNG</h3>
             <div className="flex items-center justify-center gap-2 text-muted-foreground">
                 <Users className="h-5 w-5" />
                 {visitorCount !== null ? (
@@ -135,7 +132,7 @@ export default function Footer() {
                 ) : (
                     <span className="font-bold text-xl text-primary tracking-wider">...</span>
                 )}
-                 <span>{t('visitors')}</span>
+                 <span>Pengunjung</span>
             </div>
              <div className="mt-4 flex justify-center items-center space-x-2">
               {countryFlags.map(flag => (
@@ -151,7 +148,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-8 border-t pt-8 text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} {t('copyright')}</p>
+          <p>&copy; {new Date().getFullYear()} CV Simpul Project Academy. Hak cipta dilindungi undang-undang.</p>
         </div>
       </div>
     </footer>

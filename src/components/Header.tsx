@@ -1,28 +1,26 @@
 'use client';
 
-import { Link, usePathname } from 'next-intl/navigation';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { Menu, University, Wand2, Send } from 'lucide-react';
-import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
-import LanguageSwitcher from './LanguageSwitcher';
 
 export default function Header() {
-  const t = useTranslations('Header');
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navLinks = [
-    { href: '/', label: t('home') },
-    { href: '/layanan', label: t('services') },
-    { href: '/artikel', label: t('articles') },
-    { href: '/alat-ai', label: t('ai_tool'), isNew: true },
-    { href: '/tentang-kami', label: t('about_us') },
-    { href: '/mitra', label: t('partners') },
-    { href: '/kontak', label: t('contact') },
+    { href: '/', label: 'Home' },
+    { href: '/layanan', label: 'Layanan' },
+    { href: '/artikel', label: 'Artikel' },
+    { href: '/alat-ai', label: 'Alat AI', isNew: true },
+    { href: '/tentang-kami', label: 'Tentang Kami' },
+    { href: '/mitra', label: 'Mitra' },
+    { href: '/kontak', label: 'Kontak' },
   ];
 
   return (
@@ -55,12 +53,11 @@ export default function Header() {
         </nav>
 
         <div className="hidden md:flex items-center gap-2">
-           <LanguageSwitcher />
            <Button asChild variant="outline" size="sm">
-            <Link href="/kirim-artikel"><Send className="w-4 h-4 mr-2" /> {t('submit_article')}</Link>
+            <Link href="/kirim-artikel"><Send className="w-4 h-4 mr-2" /> Kirim Tulisan</Link>
           </Button>
           <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground">
-            <Link href="/order">{t('order_now')}</Link>
+            <Link href="/order">Order Sekarang</Link>
           </Button>
         </div>
 
@@ -99,14 +96,11 @@ export default function Header() {
                   ))}
                 </nav>
                  <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground mt-4" onClick={() => setIsMenuOpen(false)}>
-                  <Link href="/order">{t('order_now')}</Link>
+                  <Link href="/order">Order Sekarang</Link>
                 </Button>
                  <Button asChild variant="outline" className="mt-2" onClick={() => setIsMenuOpen(false)}>
-                  <Link href="/kirim-artikel"><Send className="w-4 h-4 mr-2" /> {t('submit_article')}</Link>
+                  <Link href="/kirim-artikel"><Send className="w-4 h-4 mr-2" /> Kirim Tulisan</Link>
                 </Button>
-                <div className='pt-4 border-t'>
-                  <LanguageSwitcher />
-                </div>
               </div>
             </SheetContent>
           </Sheet>
