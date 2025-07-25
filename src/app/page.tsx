@@ -189,6 +189,29 @@ const SpecialOfferDialog = ({
   );
 };
 
+const FoldedCornerIcon = () => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="w-8 h-8 text-primary transition-colors duration-300 group-hover:text-accent-foreground"
+  >
+    <path
+      d="M8 22.0002H18C18.932 22.0002 19.8228 21.6811 20.5218 21.1147C21.2208 20.5482 21.6865 19.7821 21.8415 18.9142L21.9865 18.0002L16.9865 13.0002L8 22.0002Z"
+      className="fill-current opacity-30"
+    />
+    <path
+      d="M4 2.00024H16L22 8.00024V18.0002C22 18.5307 21.7893 19.0394 21.4142 19.4145C21.0391 19.7895 20.5304 20.0002 20 20.0002H4C3.46957 20.0002 2.96086 19.7895 2.58579 19.4145C2.21071 19.0394 2 18.5307 2 18.0002V4.00024C2 3.46981 2.21071 2.9611 2.58579 2.58603C2.96086 2.21095 3.46957 2.00024 4 2.00024Z"
+      className="stroke-current"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
 const AIToolWidget = () => {
   const [topic, setTopic] = useState('');
   const [generatedTitles, setGeneratedTitles] = useState<string[]>([]);
@@ -220,9 +243,9 @@ const AIToolWidget = () => {
       <SheetTrigger asChild>
         <Button
           variant="ghost"
-          className="fixed left-0 top-1/2 -translate-y-1/2 z-40 bg-background/80 hover:bg-background rounded-l-none shadow-lg border-y border-r border-primary/20 hover:w-16 w-12 h-14 transition-all duration-300 group"
+          className="fixed left-0 top-1/2 -translate-y-1/2 z-40 bg-background/80 hover:bg-primary/90 rounded-l-none shadow-lg border-y border-r border-primary/20 hover:w-16 w-12 h-14 transition-all duration-300 group p-0 flex items-center justify-center"
         >
-          <Lightbulb className="w-6 h-6 text-primary group-hover:scale-110 transition-transform" />
+          <FoldedCornerIcon />
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="w-[380px] sm:w-[450px] p-0">
@@ -313,8 +336,8 @@ const FloatingIcon = ({
       transition={{
         duration,
         repeat: Infinity,
-        repeatType: 'reverse',
-        ease: 'easeInOut',
+        repeatType: "reverse",
+        ease: "easeInOut",
         delay,
       }}
     >
