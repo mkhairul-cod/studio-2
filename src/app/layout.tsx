@@ -4,7 +4,7 @@ import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
   title: 'Simpul Academy Web',
-  description':
+  description:
     'Jasa Konversi Skripsi ke Jurnal, Proofreading, dan Pelatihan Penulisan Akademik',
 };
 

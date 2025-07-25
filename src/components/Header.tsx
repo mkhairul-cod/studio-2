@@ -1,7 +1,6 @@
 'use client';
 
-import Link from 'next-intl/link';
-import { usePathname } from 'next-intl/client';
+import { Link, usePathname } from 'next-intl/navigation';
 import { useState } from 'react';
 import { Menu, University, Wand2, Send } from 'lucide-react';
 import { useTranslations } from 'next-intl';

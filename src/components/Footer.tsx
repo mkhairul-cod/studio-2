@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next-intl/link';
+import { Link } from 'next-intl/navigation';
 import { University, Phone, Mail, MapPin, Users } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
