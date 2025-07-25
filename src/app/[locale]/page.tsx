@@ -16,6 +16,8 @@ import {
   PenSquare,
   Lightbulb,
   BookOpen,
+  Wand2,
+  Loader2,
 } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import Autoplay from "embla-carousel-autoplay"
@@ -46,27 +48,31 @@ import {
   DialogTitle,
   DialogFooter,
 } from '@/components/ui/dialog';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Textarea } from '@/components/ui/textarea';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { generateTitles } from '@/ai/flows/title-generator';
 
 const services = [
   {
     icon: BookCopy,
-    titleKey: 'Konversi Skripsi ke Jurnal',
-    descriptionKey: 'Ubah skripsi Anda menjadi artikel jurnal ilmiah yang siap publikasi.',
+    titleKey: 'service1_title',
+    descriptionKey: 'service1_description',
   },
   {
     icon: FileCheck2,
-    titleKey: 'Academic Proofreading',
-    descriptionKey: 'Pemeriksaan tata bahasa, ejaan, dan gaya penulisan akademik oleh ahli.',
+    titleKey: 'service2_title',
+    descriptionKey: 'service2_description',
   },
   {
     icon: Newspaper,
-    titleKey: 'Pendampingan Publikasi Jurnal',
-    descriptionKey: 'Bimbingan penuh dari naskah hingga terbit di jurnal nasional maupun internasional.',
+    titleKey: 'service3_title',
+    descriptionKey: 'service3_description',
   },
   {
     icon: Presentation,
-    titleKey: 'Pelatihan Penulisan Akademik',
-    descriptionKey: 'Tingkatkan kemampuan menulis karya ilmiah Anda dengan pelatihan intensif.',
+    titleKey: 'service4_title',
+    descriptionKey: 'service4_description',
   },
 ];
 
@@ -99,30 +105,26 @@ const team = [
 
 const testimonials = [
   {
-    name: 'Dosen, Universitas Swasta',
-    comment:
-      'Layanan konversi skripsi sangat membantu. Prosesnya cepat dan hasilnya memuaskan. Artikel saya berhasil terbit di jurnal SINTA 2.',
+    name: 'testimonial1_name',
+    comment: 'testimonial1_comment',
     image: 'https://placehold.co/100x100.png',
     dataAiHint: 'happy student',
   },
   {
-    name: 'Peneliti, LIPI',
-    comment:
-      'Proofreading yang teliti dan profesional. Naskah saya menjadi jauh lebih baik dan diterima di konferensi internasional. Sangat direkomendasikan!',
+    name: 'testimonial2_name',
+    comment: 'testimonial2_comment',
     image: 'https://placehold.co/100x100.png',
     dataAiHint: 'professor',
   },
   {
-    name: 'Guru, SMAN 3 Jakarta',
-    comment:
-      'Tanpa pendampingan dari Simpul Academy, saya mungkin masih bingung dengan proses publikasi. Terima kasih banyak!',
+    name: 'testimonial3_name',
+    comment: 'testimonial3_comment',
     image: 'https://placehold.co/100x100.png',
     dataAiHint: 'graduate woman',
   },
   {
-    name: 'Mahasiswa Pascasarjana, UGM',
-    comment:
-      'Pelatihan academic writing-nya sangat membuka wawasan. Banyak tips praktis yang bisa langsung diterapkan. Pematerinya juga sangat kompeten.',
+    name: 'testimonial4_name',
+    comment: 'testimonial4_comment',
     image: 'https://placehold.co/100x100.png',
     dataAiHint: 'group students',
   },
@@ -197,18 +199,158 @@ const FloatingIcon = ({ icon: Icon, className }: { icon: React.ElementType, clas
     );
 };
 
+const FoldedCornerIcon = () => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="w-8 h-8 text-primary transition-colors duration-300 group-hover:text-accent-foreground"
+  >
+    <path
+      d="M8 22.0002H18C18.932 22.0002 19.8228 21.6811 20.5218 21.1147C21.2208 20.5482 21.6865 19.7821 21.8415 18.9142L21.9865 18.0002L16.9865 13.0002L8 22.0002Z"
+      className="fill-current opacity-30"
+    />
+    <path
+      d="M4 2.00024H16L22 8.00024V18.0002C22 18.5307 21.7893 19.0394 21.4142 19.4145C21.0391 19.7895 20.5304 20.0002 20 20.0002H4C3.46957 20.0002 2.96086 19.7895 2.58579 19.4145C2.21071 19.0394 2 18.5307 2 18.0002V4.00024C2 3.46981 2.21071 2.9611 2.58579 2.58603C2.96086 2.21095 3.46957 2.00024 4 2.00024Z"
+      className="stroke-current"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+const AIToolWidget = () => {
+  const t = useTranslations('HomePage.AITool');
+  const [topic, setTopic] = useState('');
+  const [generatedTitles, setGeneratedTitles] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleGenerate = async () => {
+    if (!topic.trim()) {
+      setError(t('error_empty'));
+      return;
+    }
+    setIsLoading(true);
+    setError(null);
+    setGeneratedTitles([]);
+
+    try {
+      const result = await generateTitles({ researchTopic: topic });
+      setGeneratedTitles(result.titles);
+    } catch (e) {
+      console.error(e);
+      setError(t('error_general'));
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <Sheet>
+      <SheetTrigger asChild>
+        <motion.div
+            animate={{
+                y: [0, -5, 0],
+            }}
+            transition={{
+                duration: 2,
+                repeat: Infinity,
+                repeatType: "loop",
+                ease: "easeInOut",
+            }}
+            className="fixed bottom-6 left-6 z-40"
+        >
+          <Button
+            variant="ghost"
+            className="bg-background/80 hover:bg-primary/90 rounded-full shadow-lg border border-primary/20 hover:scale-110 w-16 h-16 transition-all duration-300 group p-0 flex items-center justify-center"
+          >
+            <FoldedCornerIcon />
+          </Button>
+        </motion.div>
+      </SheetTrigger>
+      <SheetContent side="left" className="w-[380px] sm:w-[450px] p-0">
+        <div className="flex flex-col h-full">
+            <div className="p-6 border-b">
+                <h2 className="text-2xl font-headline text-primary flex items-center gap-3">
+                    <Wand2 className="w-7 h-7" />
+                    {t('title')}
+                </h2>
+                <p className="text-sm text-muted-foreground mt-2">
+                    {t('description')}
+                </p>
+            </div>
+            <div className="p-6 flex-grow overflow-y-auto">
+                <div className="space-y-4">
+                    <Textarea
+                        placeholder={t('placeholder')}
+                        rows={4}
+                        value={topic}
+                        onChange={(e) => setTopic(e.target.value)}
+                        disabled={isLoading}
+                        className="text-base"
+                    />
+                    <Button onClick={handleGenerate} disabled={isLoading} className="w-full" size="lg">
+                        {isLoading ? (
+                            <>
+                                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                                {t('button_generating')}
+                            </>
+                        ) : (
+                           <>
+                              <Wand2 className="mr-2 h-5 w-5" />
+                              {t('button_generate')}
+                           </>
+                        )}
+                    </Button>
+                </div>
+
+                {error && (
+                    <Alert variant="destructive" className="mt-4 text-left">
+                        <AlertTitle>Error</AlertTitle>
+                        <AlertDescription>{error}</AlertDescription>
+                    </Alert>
+                )}
+
+                {generatedTitles.length > 0 && (
+                    <div className="mt-6">
+                        <h3 className="text-lg font-headline font-bold text-primary mb-3">{t('results_title')}</h3>
+                        <ul className="space-y-3 list-decimal list-inside bg-primary/5 p-4 rounded-md border">
+                            {generatedTitles.map((title, index) => (
+                                <li key={index} className="text-muted-foreground">
+                                    {title}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
+            </div>
+            <div className="p-6 border-t mt-auto text-center">
+                 <Button asChild variant="outline">
+                  <Link href="/alat-ai">{t('see_more_tools')} <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                </Button>
+            </div>
+        </div>
+      </SheetContent>
+    </Sheet>
+  );
+};
 
 export default function Home() {
   const t = useTranslations('HomePage');
   const teamT = useTranslations('Team');
+  const testimonialsT = useTranslations('Testimonials');
 
   const slides = [
     {
         title: t('slide1_title'),
         description: t('slide1_description'),
         buttons: [
-            { text: t('slide1_button1'), href: "/order", variant: "accent" },
-            { text: t('slide1_button2'), href: "/kontak", variant: "outline", icon: MessageCircle }
+            { text: t('slide1_button1'), href: "/order", variant: "default" as const },
+            { text: t('slide1_button2'), href: "/kontak", variant: "outline" as const, icon: MessageCircle }
         ],
         image: { src: "https://placehold.co/1200x800.png", dataAiHint: "researcher presentation" },
         floatingIcons: [
@@ -221,8 +363,8 @@ export default function Home() {
         title: t('slide2_title'),
         description: t('slide2_description'),
         buttons: [
-            { text: t('slide2_button1'), href: "/mitra#join-mitra", variant: "accent", icon: Users },
-            { text: t('slide2_button2'), href: "/layanan", variant: "outline", icon: Briefcase }
+            { text: t('slide2_button1'), href: "/mitra#join-mitra", variant: "default" as const, icon: Users },
+            { text: t('slide2_button2'), href: "/layanan", variant: "outline" as const, icon: Briefcase }
         ],
         image: { src: "https://placehold.co/1200x800.png", dataAiHint: "team collaboration" },
         floatingIcons: [
@@ -231,20 +373,6 @@ export default function Home() {
             { icon: Award, className: "bottom-[10%] right-[30%]" },
         ]
     },
-    {
-        title: t('slide3_title'),
-        description: t('slide3_description'),
-        buttons: [
-            { text: t('slide3_button1'), href: "/layanan", variant: "accent", icon: Presentation },
-            { text: t('slide3_button2'), href: "/kontak", variant: "outline", icon: MessageCircle }
-        ],
-        image: { src: "https://placehold.co/1200x800.png", dataAiHint: "online workshop" },
-        floatingIcons: [
-            { icon: Presentation, className: "top-[20%] left-[15%]" },
-            { icon: Lightbulb, className: "bottom-[20%] right-[15%]" },
-            { icon: PenSquare, className: "top-[40%] right-[10%]" },
-        ]
-    }
   ];
 
   const plugin = React.useRef(
@@ -253,6 +381,7 @@ export default function Home() {
   const [isSpecialOfferOpen, setSpecialOfferOpen] = useState(false);
 
   useEffect(() => {
+    // This effect should only run on the client
     const hasSeenOffer = sessionStorage.getItem('hasSeenLpdpOffer');
     if (!hasSeenOffer) {
       const timer = setTimeout(() => {
@@ -267,6 +396,8 @@ export default function Home() {
   return (
     <>
         <SpecialOfferDialog open={isSpecialOfferOpen} onOpenChange={setSpecialOfferOpen} />
+        <AIToolWidget />
+
         {/* Hero Section */}
         <section
           id="hero"
@@ -293,6 +424,7 @@ export default function Home() {
                             style={{objectFit: 'cover'}}
                             className="opacity-10"
                             data-ai-hint={slide.image.dataAiHint}
+                            priority={index === 0} // Prioritize loading the first slide image
                         />
                          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
                         <div className="container mx-auto px-4 h-full flex flex-col justify-center text-center relative z-10">
@@ -304,7 +436,7 @@ export default function Home() {
                             </p>
                             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                                 {slide.buttons.map((button, btnIndex) => (
-                                     <Button key={btnIndex} asChild size="lg" className={button.variant === 'accent' ? 'bg-accent hover:bg-accent/90 text-accent-foreground' : 'border-primary/30' } variant={button.variant === 'accent' ? 'default' : 'outline'}>
+                                     <Button key={btnIndex} asChild size="lg" className={button.variant === 'default' ? 'bg-accent hover:bg-accent/90 text-accent-foreground' : 'border-primary/30' } variant={button.variant}>
                                         <Link href={button.href}>
                                             {button.icon && <button.icon className="mr-2 h-5 w-5"/>}
                                             {button.text}
@@ -350,10 +482,10 @@ export default function Home() {
                     <div className="mx-auto bg-primary/10 p-4 rounded-full w-fit">
                       <service.icon className="w-8 h-8 text-primary" />
                     </div>
-                    <CardTitle className="font-headline mt-4">{service.titleKey}</CardTitle>
+                    <CardTitle className="font-headline mt-4">{t(service.titleKey as any)}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-muted-foreground">{service.descriptionKey}</p>
+                    <p className="text-muted-foreground">{t(service.descriptionKey as any)}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -419,10 +551,10 @@ export default function Home() {
                           <div className="flex items-start gap-4">
                             <Avatar className="w-16 h-16 border-2 border-primary/20">
                               <AvatarImage src={testimonial.image} data-ai-hint={testimonial.dataAiHint} />
-                              <AvatarFallback>{testimonial.name.charAt(0)}</AvatarFallback>
+                              <AvatarFallback>{testimonialsT(testimonial.name as any).charAt(0)}</AvatarFallback>
                             </Avatar>
                             <div>
-                              <CardTitle className="font-headline text-lg">{testimonial.name}</CardTitle>
+                              <CardTitle className="font-headline text-lg">{testimonialsT(testimonial.name as any)}</CardTitle>
                               <div className="flex mt-1 text-amber-400">
                                 {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-current" />)}
                               </div>
@@ -431,7 +563,7 @@ export default function Home() {
                         </CardHeader>
                         <CardContent>
                           <p className="text-muted-foreground italic">
-                            "{testimonial.comment}"
+                            "{testimonialsT(testimonial.comment as any)}"
                           </p>
                         </CardContent>
                       </Card>
@@ -447,3 +579,5 @@ export default function Home() {
     </>
   );
 }
+
+    
