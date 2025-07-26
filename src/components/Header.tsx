@@ -1,26 +1,29 @@
 'use client';
 
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { Menu, University, Wand2, Send } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
+import LanguageSwitcher from './LanguageSwitcher';
+import { Link } from '@/navigation';
 
 export default function Header() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const t = useTranslations('Header');
 
   const navLinks = [
-    { href: '/', label: 'Home' },
-    { href: '/layanan', label: 'Layanan' },
-    { href: '/artikel', label: 'Artikel' },
-    { href: '/alat-ai', label: 'Alat AI', isNew: true },
-    { href: '/tentang-kami', label: 'Tentang Kami' },
-    { href: '/mitra', label: 'Mitra' },
-    { href: '/kontak', label: 'Kontak' },
+    { href: '/', label: t('home') },
+    { href: '/layanan', label: t('services') },
+    { href: '/artikel', label: t('articles') },
+    { href: '/alat-ai', label: t('ai_tools'), isNew: true },
+    { href: '/tentang-kami', label: t('about_us') },
+    { href: '/mitra', label: t('partners') },
+    { href: '/kontak', label: t('contact') },
   ];
 
   return (
@@ -45,7 +48,7 @@ export default function Header() {
               {link.label}
               {link.isNew && (
                 <span className="bg-accent/80 text-accent-foreground text-xs font-bold px-2 py-0.5 rounded-full">
-                  NEW
+                  {t('new')}
                 </span>
               )}
             </Link>
@@ -53,11 +56,12 @@ export default function Header() {
         </nav>
 
         <div className="hidden md:flex items-center gap-2">
+           <LanguageSwitcher />
            <Button asChild variant="outline" size="sm">
-            <Link href="/kirim-artikel"><Send className="w-4 h-4 mr-2" /> Kirim Tulisan</Link>
+            <Link href="/kirim-artikel"><Send className="w-4 h-4 mr-2" /> {t('submit_article')}</Link>
           </Button>
           <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground">
-            <Link href="/order">Order Sekarang</Link>
+            <Link href="/order">{t('order_now')}</Link>
           </Button>
         </div>
 
@@ -89,17 +93,20 @@ export default function Header() {
                       {link.label}
                        {link.isNew && (
                         <span className="bg-accent/80 text-accent-foreground text-xs font-bold px-2 py-0.5 rounded-full">
-                          NEW
+                          {t('new')}
                         </span>
                       )}
                     </Link>
                   ))}
                 </nav>
+                 <div className="pt-4 border-t">
+                  <LanguageSwitcher />
+                </div>
                  <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground mt-4" onClick={() => setIsMenuOpen(false)}>
-                  <Link href="/order">Order Sekarang</Link>
+                  <Link href="/order">{t('order_now')}</Link>
                 </Button>
                  <Button asChild variant="outline" className="mt-2" onClick={() => setIsMenuOpen(false)}>
-                  <Link href="/kirim-artikel"><Send className="w-4 h-4 mr-2" /> Kirim Tulisan</Link>
+                  <Link href="/kirim-artikel"><Send className="w-4 h-4 mr-2" /> {t('submit_article')}</Link>
                 </Button>
               </div>
             </SheetContent>

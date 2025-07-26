@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import { Link } from 'next-intl/navigation';
 import {
   BookCopy,
   FileCheck2,
@@ -45,13 +44,14 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogTitle,
   DialogFooter,
+  DialogTitle,
 } from '@/components/ui/dialog';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Textarea } from '@/components/ui/textarea';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { generateTitles } from '@/ai/flows/title-generator';
+import { Link } from '@/navigation';
 
 const services = [
   {
@@ -579,5 +579,3 @@ export default function Home() {
     </>
   );
 }
-
-    
